@@ -1,0 +1,5 @@
+1. tại thư mục containers - thư mục chứa component chỉ sử dụng 1 lần
+    add thêm thư mục Auth
+        -> add file Login.js, Login.scss
+    trong file Login.js, viết form jsx theo mẫu: 
+        https://www.csscodelab.com/responsive-login-form-in-react-js/
