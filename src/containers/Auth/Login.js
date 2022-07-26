@@ -6,6 +6,8 @@ import * as actions from "../../store/actions";
 
 import './Login.scss';
 import { FormattedMessage } from 'react-intl';
+import { handleLogin } from '../../services';
+import { reduce } from 'lodash';
 
 
 
@@ -15,7 +17,8 @@ class Login extends Component {
         this.state = {
             username: '',
             password: '',
-            isShowPassword: false
+            isShowPassword: false,
+            errMessage: ''
         }
     }
     handleOnchangeUsename = (e) => {
@@ -34,8 +37,28 @@ class Login extends Component {
             isShowPassword: !this.state.isShowPassword
         })
     }
-    handleLogin = () => {
-        console.log(this.state)
+    handleLogin = async () => {
+        this.setState({
+            errMessage: ''
+        })
+        try {
+            let data = await handleLogin(this.state.username, this.state.password)
+            //console.log('data in login', data)
+            if (data.errCode !== 0) {
+                this.setState({
+                    errMessage: data.message
+                })
+            }
+            if (data && data.errCode === 0) {
+                this.props.userLoginSuccess(data.user)
+            }
+        } catch (error) {
+            this.setState({
+                errMessage: error.response.data?.message
+            })
+        }
+
+        //console.log(this.state)
     }
     render() {
 
@@ -64,12 +87,15 @@ class Login extends Component {
                                 />
                                 <span onClick={(e) => this.handleShowHide(e)}>
                                     {this.state.isShowPassword ?
-                                        <i class="far fa-eye-slash"></i>
+                                        <i className="far fa-eye-slash"></i>
                                         :
-                                        <i class="fas fa-eye"></i>
+                                        <i className="fas fa-eye"></i>
                                     }
                                 </span>
                             </div>
+                        </div>
+                        <div className='col-12' style={{ color: 'red' }}>
+                            {this.state.errMessage}
                         </div>
                         <div className='col-12 contain-btn'>
                             <button
@@ -86,8 +112,8 @@ class Login extends Component {
                             Or sign in with:
                         </div>
                         <div className='col-12 login-with'>
-                            <i class="fab fa-google-plus google-icon"></i>
-                            <i class="fab fa-facebook face-icon"></i>
+                            <i className="fab fa-google-plus google-icon"></i>
+                            <i className="fab fa-facebook face-icon"></i>
 
                         </div>
                     </div>
@@ -106,8 +132,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         navigate: (path) => dispatch(push(path)),
-        adminLoginSuccess: (adminInfo) => dispatch(actions.adminLoginSuccess(adminInfo)),
-        adminLoginFail: () => dispatch(actions.adminLoginFail()),
+        // adminLoginSuccess: (adminInfo) => dispatch(actions.adminLoginSuccess(adminInfo)),
+        //userLoginFail: () => dispatch(actions.userLoginFail()),
+        userLoginSuccess: (userInfo) => dispatch(actions.userLoginSuccess(userInfo)),
     };
 };
 

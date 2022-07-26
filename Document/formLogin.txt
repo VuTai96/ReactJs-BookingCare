@@ -3,3 +3,5 @@
         -> add file Login.js, Login.scss
     trong file Login.js, viết form jsx theo mẫu: 
         https://www.csscodelab.com/responsive-login-form-in-react-js/
+
+2. sử dùng state cho input form
