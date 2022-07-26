@@ -13,4 +13,8 @@ const handleLogin = async (username, password) => {
     //     console.log(error)
     // }
 }
-export default handleLogin 
+const getAllUser = async (id) => {
+    return axios.get(`/api/get-all-user?id=${id}`)
+}
+export default handleLogin
+export { getAllUser }
