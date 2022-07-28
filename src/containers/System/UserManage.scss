@@ -56,3 +56,24 @@
         }
     }
 }
+
+.line-container {
+    display       : flex;
+    flex-direction: row;
+    column-gap    : 15px;
+    flex-wrap     : wrap;
+
+    .child-input {
+        width        : 48%;
+        margin-bottom: 10px;
+
+        &.address {
+            width: 100%;
+        }
+
+        input {
+            width  : 100%;
+            padding: 0 5px;
+        }
+    }
+}

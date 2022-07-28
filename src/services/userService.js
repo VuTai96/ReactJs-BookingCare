@@ -13,8 +13,17 @@ const handleLogin = async (username, password) => {
     //     console.log(error)
     // }
 }
-const getAllUser = async (id) => {
+const getAllUser = (id) => {
     return axios.get(`/api/get-all-user?id=${id}`)
 }
+const createUser = (data) => {
+    return axios.post('api/create-new-user', data)
+}
+const deleteUser = (data) => {
+    return axios.delete('api/delete-user', { data })
+}
+const updateUser = (data) => {
+    return axios.put('/api/edit-user', data)
+}
 export default handleLogin
-export { getAllUser }
+export { getAllUser, createUser, deleteUser, updateUser }

@@ -2,18 +2,27 @@ import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import './UserManage.scss'
-import { getAllUser } from '../../services/userService'
+import { getAllUser, createUser, deleteUser, updateUser } from '../../services/userService'
 import axios from 'axios';
+import UserModal from './UserModal';
+import { emitter } from '../../utils/emitter';
+import UserModalEdit from './UserModalEdit';
+
 class UserManage extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            arrUser: []
-
+            arrUser: [],
+            isOpenUserModal: false,
+            isOpenUserModalEdit: false,
+            userEdit: {}
         }
     }
 
     async componentDidMount() {
+        await this.getAllUserFromReact()
+    }
+    getAllUserFromReact = async () => {
         let dataUser = await getAllUser('all')
         if (dataUser && dataUser.errCode === 0) {
             this.setState({
@@ -22,12 +31,98 @@ class UserManage extends Component {
         }
     }
 
+    handleOnclickAdd = () => {
+        this.setState({
+            isOpenUserModal: true
+        })
+    }
+    handleCloseModal = () => {
+        this.setState({
+            isOpenUserModal: false
+        })
+    }
+    handleCloseModalEdit = () => {
+        this.setState({
+            isOpenUserModalEdit: false
+        })
+    }
+    createNewUser = async (data) => {
+        try {
+            let response = await createUser(data)
+            if (response?.errCode === 0) {
+                this.getAllUserFromReact()
+                emitter.emit('EVENT_CLEAR_MODAL_DATA')
+                this.setState({
+                    isOpenUserModal: false
+                })
+                console.log(response.message)
+            } else {
+                console.log(response.message)
+            }
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    updateUser = async (data) => {
+        try {
+            let id = this.state.userEdit.id
+            let response = await updateUser({ id, ...data })
+            if (response?.errCode === 0) {
+                this.getAllUserFromReact();
+                this.setState({
+                    isOpenUserModalEdit: false
+                })
+                console.log(response.message)
+            } else {
+                console.log(response.message)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    handleClickDelete = async (data) => {
+        try {
+            let response = await deleteUser(data)
+            if (response?.errCode === 0) {
+                this.getAllUserFromReact()
+            } else {
+                console.log(response.message)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    handleClickEdit = (data) => {
+        this.setState({
+            isOpenUserModalEdit: true,
+            userEdit: data
+        })
+    }
 
     render() {
-        console.log(this.state.arrUser)
+
         return (
             <>
+                <UserModal
+                    isOpen={this.state.isOpenUserModal}
+                    closeModal={this.handleCloseModal}
+                    createNewUser={this.createNewUser}
+                />
+                {this.state.isOpenUserModalEdit &&
+                    <UserModalEdit
+                        isOpen={this.state.isOpenUserModalEdit}
+                        closeModal={this.handleCloseModalEdit}
+                        currentUser={this.state.userEdit}
+                        updateUser={this.updateUser}
+                    />
+                }
                 <div className="title">Manage users with babyShark</div>
+                <div className='mx-2'>
+                    <button type="button" className="btn btn-primary px-3" onClick={() => this.handleOnclickAdd()}>
+                        <i className="fas fa-plus"></i> Add user
+                    </button>
+                </div>
                 <div className='users-container mt-3 mx-2'>
                     <table id="customers">
                         <thead>
@@ -49,11 +144,16 @@ class UserManage extends Component {
                                         <td>{item.lastName}</td>
                                         <td>{item.address}</td>
                                         <td>
-                                            <button className='btn-edit' >
-                                                <i class="fas fa-pencil-alt"></i>
+                                            <button className='btn-edit'
+                                                onClick={() => this.handleClickEdit(item)}
+                                            >
+                                                <i className="fas fa-pencil-alt"></i>
                                             </button>
-                                            <button className='btn-delete'>
-                                                <i class="fas fa-trash-alt"></i>
+                                            <button
+                                                className='btn-delete'
+                                                onClick={() => this.handleClickDelete(item)}
+                                            >
+                                                <i className="fas fa-trash-alt"></i>
                                             </button>
 
                                         </td>
@@ -71,9 +171,7 @@ class UserManage extends Component {
             </>
         );
     }
-
 }
-
 const mapStateToProps = state => {
     return {
     };
