@@ -12,16 +12,18 @@
             justify-content: flex-end;
 
             .header-logo {
-                margin-right   : 10px;
-                height         : 90%;
-                width          : 70%;
+                margin-right   : 50px;
+                height         : 60%;
+                width          : 50%;
                 background     : url(../../assets/images/logo.svg) center center no-repeat;
                 background-size: contain;
+
+
             }
 
             i {
                 width     : 20%;
-                font-size : 25px;
+                font-size : 23px;
                 text-align: right;
                 color     : gray;
             }
