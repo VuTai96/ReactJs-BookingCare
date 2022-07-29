@@ -1,3 +1,4 @@
+import { LANGUAGES } from '../../utils';
 import actionTypes from '../actions/actionTypes';
 
 const initContentOfConfirmModal = {
@@ -9,7 +10,7 @@ const initContentOfConfirmModal = {
 
 const initialState = {
     started: true,
-    // language: 'vi',
+    language: LANGUAGES.VI,
     systemMenuPath: '/system/user-manage',
     contentOfConfirmModal: {
         ...initContentOfConfirmModal

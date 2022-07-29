@@ -1,0 +1,94 @@
+$myHeightimage : 200px;
+$myHeighPre    :45px;
+
+.homepage-section {
+    height          : 330px;
+    background-color: #f5f5f5;
+
+    .section-content {
+        margin          : 0 145px;
+        height          : 250px;
+        background-color: transparent;
+
+        .section-header {
+            padding        : 20px 0;
+            display        : flex;
+            justify-content: space-between;
+            justify-items  : center;
+
+
+            h2 {
+                font-weight: 600;
+            }
+
+            button {
+                text-transform  : uppercase;
+                background-color: #ebebeb;
+                border          : none;
+                padding         : 0 15px;
+
+                &:hover {
+                    background-color: #f7fb04;
+                }
+
+            }
+
+        }
+
+        .section-body {
+
+            .image-section {
+                .div-image {
+                    background: url(../../../assets/sectionsImage/thankinh.jpg) center center no-repeat;
+                    height    : $myHeightimage;
+                }
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+
+            .prestyle {
+                width           : 45px;
+                height          : $myHeighPre;
+                position        : absolute;
+                top             : $myHeightimage/2 - $myHeighPre/2;
+                left            : -10px;
+                z-index         : 1000;
+                background-color: rgb(229, 221, 221);
+                display         : flex;
+                align-items     : center;
+                justify-content : center;
+                opacity         : 0.8;
+
+                i {
+                    font-size: 30px;
+                    opacity  : 0.5;
+                    color    : rgb(36, 28, 28);
+                }
+
+            }
+
+            .nextstyle {
+                width           : 45px;
+                height          : $myHeighPre;
+                position        : absolute;
+                top             : $myHeightimage/2 - $myHeighPre/2;
+                right           : -10px;
+                z-index         : 1000;
+                background-color: rgb(229, 221, 221);
+                display         : flex;
+                align-items     : center;
+                justify-content : center;
+                opacity         : 0.8;
+
+
+                i {
+                    font-size: 30px;
+                    opacity  : 0.5;
+                    color    : rgb(36, 28, 28);
+                }
+            }
+        }
+    }
+}

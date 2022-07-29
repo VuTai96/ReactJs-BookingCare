@@ -21,7 +21,7 @@ class Home extends Component {
                 <div className='home-header-container'>
                     <div className='home-header-content'>
                         <div className='left-content'>
-                            <i class="fas fa-bars"></i>
+                            <i className="fas fa-bars"></i>
                             <div className='header-logo'></div>
                         </div>
                         <div className='center-content'>
@@ -53,7 +53,7 @@ class Home extends Component {
                         </div>
                         <div className='right-content'>
                             <div className='support'>
-                                <i class="fas fa-question-circle"></i>
+                                <i className="fas fa-question-circle"></i>
                                 <FormattedMessage id="homeheader.support" />
                             </div>
                             <div className={this.props.language === LANGUAGES.VI ? 'vietnam active' : 'vietnam'}><span onClick={() => this.changLangguage(LANGUAGES.VI)}>VN</span></div>
@@ -73,55 +73,55 @@ class Home extends Component {
                             <FormattedMessage id='banner.comprehensive-health-care' />
                         </div>
                         <div className='search'>
-                            <i class="fas fa-search"></i>
+                            <i className="fas fa-search"></i>
                             <input placeholder={(this.props.language == LANGUAGES.VI ? 'Tìm phòng khám' : 'Find a clinic')} />
                         </div>
                     </div>
                     <div className='bottom-banner'>
                         <div className='options'>
-                            <i class="fas fa-hospital"></i>
+                            <i className="fas fa-hospital"></i>
                             <div>
                                 <FormattedMessage id='banner.c1' />
                             </div>
                         </div>
                         <div className='options'>
-                            <i class="fas fa-mobile-alt"></i>
+                            <i className="fas fa-mobile-alt"></i>
                             <div>
                                 <FormattedMessage id='banner.c2' />
                             </div>
                         </div>
                         <div className='options'>
-                            <i class="fas fa-box"></i>
+                            <i className="fas fa-box"></i>
                             <div>
                                 <FormattedMessage id='banner.c3' />
                             </div>
                         </div>
                         <div className='options'>
-                            <i class="fas fa-hospital"></i>
+                            <i className="fas fa-hospital"></i>
                             <div>
                                 <FormattedMessage id='banner.c4' />
                             </div>
                         </div>
                         <div className='options'>
-                            <i class="fas fa-hospital"></i>
+                            <i className="fas fa-hospital"></i>
                             <div>
                                 <FormattedMessage id='banner.c5' />
                             </div>
                         </div>
                         <div className='options'>
-                            <i class="fas fa-hospital"></i>
+                            <i className="fas fa-hospital"></i>
                             <div>
                                 <FormattedMessage id='banner.c6' />
                             </div>
                         </div>
                         <div className='options'>
-                            <i class="fas fa-hospital"></i>
+                            <i className="fas fa-hospital"></i>
                             <div>
                                 <FormattedMessage id='banner.c7' />
                             </div>
                         </div>
                         <div className='options'>
-                            <i class="fas fa-hospital"></i>
+                            <i className="fas fa-hospital"></i>
                             <div>
                                 <FormattedMessage id='banner.c8' />
                             </div>
