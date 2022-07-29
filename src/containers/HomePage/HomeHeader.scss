@@ -55,20 +55,32 @@
             }
 
             .vietnam {
-                cursor: pointer;
-                margin: 0 0 0 15px;
+                cursor : pointer;
+                margin : 0 0 0 15px;
+                opacity: 0.2;
 
                 &.active {
-                    color: #25c9a0;
+                    opacity: 1;
+                    color  : #25c9a0;
+                }
+
+                &:hover {
+                    opacity: 0.8;
                 }
             }
 
             .english {
-                cursor: pointer;
-                margin: 0 20px 0 10px;
+                cursor : pointer;
+                margin : 0 20px 0 10px;
+                opacity: 0.2;
 
                 &.active {
-                    color: #25c9a0;
+                    color  : #25c9a0;
+                    opacity: 1;
+                }
+
+                &:hover {
+                    opacity: 0.8;
                 }
             }
         }

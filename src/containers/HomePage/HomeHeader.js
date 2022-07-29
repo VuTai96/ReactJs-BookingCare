@@ -2,11 +2,17 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './HomeHeader.scss';
 import { FormattedMessage } from 'react-intl'
+import { LANGUAGES } from '../../utils';
+import * as action from '../../store/actions'
 
 
 
 class Home extends Component {
 
+
+    changLangguage = (language) => {
+        this.props.changLanguageReduxApp(language)
+    }
     render() {
 
 
@@ -50,8 +56,8 @@ class Home extends Component {
                                 <i class="fas fa-question-circle"></i>
                                 <FormattedMessage id="homeheader.support" />
                             </div>
-                            <div className='vietnam active'>VN</div>
-                            <div className='english'>EN</div>
+                            <div className={this.props.language === LANGUAGES.VI ? 'vietnam active' : 'vietnam'}><span onClick={() => this.changLangguage(LANGUAGES.VI)}>VN</span></div>
+                            <div className={this.props.language === LANGUAGES.EN ? 'english active' : 'english'}><span onClick={() => this.changLangguage(LANGUAGES.EN)}>EN</span></div>
 
                         </div>
                     </div>
@@ -68,7 +74,7 @@ class Home extends Component {
                         </div>
                         <div className='search'>
                             <i class="fas fa-search"></i>
-                            <input placeholder={(this.props.language == 'vn' ? 'Tìm phòng khám' : 'Find a clinic')} />
+                            <input placeholder={(this.props.language == LANGUAGES.VI ? 'Tìm phòng khám' : 'Find a clinic')} />
                         </div>
                     </div>
                     <div className='bottom-banner'>
@@ -131,12 +137,13 @@ class Home extends Component {
 const mapStateToProps = state => {
     return {
         isLoggedIn: state.user.isLoggedIn,
-        language: state.user.language
+        language: state.app.language
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
+        changLanguageReduxApp: (language) => dispatch(action.changLanguageReduxApp(language))
     };
 };
 

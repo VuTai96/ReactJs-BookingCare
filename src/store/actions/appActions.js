@@ -8,3 +8,7 @@ export const setContentOfConfirmModal = (contentOfConfirmModal) => ({
     type: actionTypes.SET_CONTENT_OF_CONFIRM_MODAL,
     contentOfConfirmModal: contentOfConfirmModal
 });
+export const changLanguageReduxApp = (language) => ({
+    type: actionTypes.CHANGE_LANGUAGE,
+    language: language
+});
