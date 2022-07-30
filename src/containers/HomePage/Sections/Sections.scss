@@ -26,6 +26,8 @@ $myWidthimage  : 300px;
         .information {
             width     : 40%;
             text-align: justify;
+            overflow  : auto;
+            height    : 300px;
         }
     }
 
@@ -202,7 +204,7 @@ $myWidthimage  : 300px;
     text-align      : center;
     background-image: linear-gradient(180deg, rgb(240, 217, 217) 5%, rgb(161, 184, 225)90%);
 
-    fon a {
+    a {
         text-decoration: none;
     }
 }
