@@ -6,7 +6,7 @@ function SampleNextArrow(props) {
             // style={{ ...style, display: "block", background: "red" }}
             onClick={onClick}
         >
-            <i class="fas fa-chevron-right"></i>
+            <i className="fas fa-chevron-right"></i>
         </div>
     );
 }
@@ -21,7 +21,7 @@ function SamplePrevArrow(props) {
             // }}
             onClick={onClick}
         >
-            <i class="fas fa-chevron-left"></i>
+            <i className="fas fa-chevron-left"></i>
         </div>
     );
 }

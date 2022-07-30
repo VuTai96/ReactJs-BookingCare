@@ -16,9 +16,9 @@ class About extends Component {
                             <iframe
                                 src="https://www.youtube.com/embed/DeqZkLJYreI?list=RDDeqZkLJYreI"
                                 title="Bruno Mars - Talking To The Moon (Lyrics)"
-                                frameborder="0"
+                                frameBorder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen>
+                                allowFullScreen>
                             </iframe>
                         </div>
                         <div className='information'>
