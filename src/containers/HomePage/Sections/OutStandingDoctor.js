@@ -34,10 +34,11 @@ import "slick-carousel/slick/slick-theme.css";
 //         </div>
 //     );
 // }
-class Specailty extends Component {
+class OutStandingDoctor extends Component {
     render() {
 
         let settings = {
+            className: "slider variable-width",
             dots: false,
             infinite: true,
             speed: 500,
@@ -50,34 +51,46 @@ class Specailty extends Component {
             <div className='homepage-section first'>
                 <div className='section-content'>
                     <div className='section-header'>
-                        <h2>Chuyên khoa phổ biến</h2>
+                        <h2>Bác sĩ nổi bật tuần qua</h2>
                         <button>Xem thêm</button>
                     </div>
                     <div className='section-body'>
                         <Slider {...settings}>
-                            <div className='image-section'>
+                            <div className='image-section3'>
                                 <div className='div-image'>                                </div>
-                                <h5>Khám thần kinh</h5>
+                                <h5>Bác sĩ bệnh viện chợ rẫy</h5>
+                                <p>Đa khoa</p>
+
                             </div>
-                            <div className='image-section'>
+                            <div className='image-section3'>
                                 <div className='div-image'>                                </div>
-                                <h5>Khám thần kinh</h5>
+                                <h5>Bác sĩ bệnh viện chợ rẫy</h5>
+                                <p>Đa khoa</p>
+
                             </div>
-                            <div className='image-section'>
+                            <div className='image-section3'>
                                 <div className='div-image'>                                </div>
-                                <h5>Khám thần kinh</h5>
+                                <h5>Bác sĩ bệnh viện chợ rẫy</h5>
+                                <p>Đa khoa</p>
+
                             </div>
-                            <div className='image-section'>
+                            <div className='image-section3'>
                                 <div className='div-image'>                                </div>
-                                <h5>Khám thần kinh</h5>
+                                <h5>Bác sĩ bệnh viện chợ rẫy</h5>
+                                <p>Đa khoa</p>
+
                             </div>
-                            <div className='image-section'>
+                            <div className='image-section3'>
                                 <div className='div-image'>                                </div>
-                                <h5>Khám thần kinh</h5>
+                                <h5>Bác sĩ bệnh viện chợ rẫy</h5>
+                                <p>Đa khoa</p>
+
                             </div>
-                            <div className='image-section'>
+                            <div className='image-section3'>
                                 <div className='div-image'>                                </div>
-                                <h5>Khám thần kinh</h5>
+                                <h5>Bác sĩ bệnh viện chợ rẫy</h5>
+                                <p>Đa khoa</p>
+
                             </div>
                         </Slider>
                     </div>
@@ -101,4 +114,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Specailty);
+export default connect(mapStateToProps, mapDispatchToProps)(OutStandingDoctor);

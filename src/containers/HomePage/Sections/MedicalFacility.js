@@ -34,7 +34,7 @@ import "slick-carousel/slick/slick-theme.css";
 //         </div>
 //     );
 // }
-class Specailty extends Component {
+class MedicalFacility extends Component {
     render() {
 
         let settings = {
@@ -47,37 +47,37 @@ class Specailty extends Component {
             prevArrow: <SamplePrevArrow />
         };
         return (
-            <div className='homepage-section first'>
+            <div className='homepage-section second'>
                 <div className='section-content'>
                     <div className='section-header'>
-                        <h2>Chuyên khoa phổ biến</h2>
+                        <h2>Cơ sở y tế nổi bật</h2>
                         <button>Xem thêm</button>
                     </div>
                     <div className='section-body'>
                         <Slider {...settings}>
-                            <div className='image-section'>
+                            <div className='image-section2'>
                                 <div className='div-image'>                                </div>
-                                <h5>Khám thần kinh</h5>
+                                <h5>Bệnh viện hữu nghị Việt Đức</h5>
                             </div>
-                            <div className='image-section'>
+                            <div className='image-section2'>
                                 <div className='div-image'>                                </div>
-                                <h5>Khám thần kinh</h5>
+                                <h5>Bệnh viện hữu nghị Việt Đức</h5>
                             </div>
-                            <div className='image-section'>
+                            <div className='image-section2'>
                                 <div className='div-image'>                                </div>
-                                <h5>Khám thần kinh</h5>
+                                <h5>Bệnh viện hữu nghị Việt Đức</h5>
                             </div>
-                            <div className='image-section'>
+                            <div className='image-section2'>
                                 <div className='div-image'>                                </div>
-                                <h5>Khám thần kinh</h5>
+                                <h5>Bệnh viện hữu nghị Việt Đức</h5>
                             </div>
-                            <div className='image-section'>
+                            <div className='image-section2'>
                                 <div className='div-image'>                                </div>
-                                <h5>Khám thần kinh</h5>
+                                <h5>Bệnh viện hữu nghị Việt Đức</h5>
                             </div>
-                            <div className='image-section'>
+                            <div className='image-section2'>
                                 <div className='div-image'>                                </div>
-                                <h5>Khám thần kinh</h5>
+                                <h5>Bệnh viện hữu nghị Việt Đức</h5>
                             </div>
                         </Slider>
                     </div>
@@ -101,4 +101,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Specailty);
+export default connect(mapStateToProps, mapDispatchToProps)(MedicalFacility);

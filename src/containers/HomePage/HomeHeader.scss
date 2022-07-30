@@ -1,5 +1,9 @@
 .home-header-container {
-    height: 60px;
+    height          : 60px;
+    position        : sticky;
+    top             : 0;
+    background-color: white;
+    z-index         : 2000;
 
     .home-header-content {
         display: flex;
