@@ -25,5 +25,8 @@ const deleteUser = (data) => {
 const updateUser = (data) => {
     return axios.put('/api/edit-user', data)
 }
+const getAllCode = (type) => {
+    return axios.get(`/api/allcode?type=${type}`)
+}
 export default handleLogin
-export { getAllUser, createUser, deleteUser, updateUser }
+export { getAllUser, createUser, deleteUser, updateUser, getAllCode }
