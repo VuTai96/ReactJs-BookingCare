@@ -1,15 +1,33 @@
-// import actionTypes from './actionTypes';
+import actionTypes from './actionTypes';
+import { getAllCode } from '../../services/userService'
 
-// export const adminLoginSuccess = (adminInfo) => ({
-//     type: actionTypes.ADMIN_LOGIN_SUCCESS,
-//     adminInfo: adminInfo
-// })
 
-// export const adminLoginFail = () => ({
-//     type: actionTypes.ADMIN_LOGIN_FAIL
-// })
+export const fetchGenderStart = () => {
+    // This form is allowed by Redux Thunk middleware
+    // described below in “Async Action Creators” section.
+    return async (dispatch, getState) => {
+        //console.log(getState())
+        try {
+            let res = await getAllCode('gender')
+            if (res?.errCode === 0) {
+                dispatch(fetchGenderSuccess(res.data))
 
-// export const processLogout = () => ({
-//     type: actionTypes.PROCESS_LOGOUT
-// })
+            } else {
+                dispatch(fetchGenderFail())
+            }
+        } catch (e) {
+            dispatch(fetchGenderFail())
+            console.log('fetchGenderStart error', e)
+        }
+    }
+}
+
+export const fetchGenderSuccess = (resData) => ({
+    type: actionTypes.FETCH_GENDER_SUCCESS,
+    data: resData
+})
+
+export const fetchGenderFail = () => ({
+    type: actionTypes.AFETCH_GENDER_FAIL
+})
 

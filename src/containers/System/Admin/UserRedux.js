@@ -3,26 +3,28 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { getAllCode } from '../../../services/userService'
 import { LANGUAGES } from '../../../utils';
+import * as actions from '../../../store/actions'
 
 class UserRedux extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            arrGender: []
+            arrGender: [],
+            arrPosition: [],
+            arrRole: []
         }
     }
 
     async componentDidMount() {
-        try {
-            let response = await getAllCode('gender')
+        await this.props.fetchGenderStart()
+    }
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.data !== this.props.data) {
             this.setState({
-                arrGender: response.data
+                arrGender: this.props.data
             })
-        } catch (error) {
-            console.log(error)
         }
     }
-
 
     render() {
         let genders = this.state.arrGender;
@@ -123,12 +125,14 @@ class UserRedux extends Component {
 
 const mapStateToProps = state => {
     return {
-        language: state.app.language
+        language: state.app.language,
+        data: state.admin.data
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
+        fetchGenderStart: () => dispatch(actions.fetchGenderStart())
     };
 };
 
