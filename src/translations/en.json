@@ -49,7 +49,7 @@
         "gender": "Gender",
         "position": "Position",
         "role": "Role",
-        "image": "Image",
+        "image": "Avata",
         "save": "Save user"
     }
 }

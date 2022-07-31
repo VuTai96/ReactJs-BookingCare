@@ -17,24 +17,38 @@ class UserRedux extends Component {
 
     async componentDidMount() {
         await this.props.fetchGenderStart()
+        await this.props.fetchRoleStart()
+        await this.props.fetchPositionStart()
+
     }
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.data !== this.props.data) {
+        if (prevProps.genders !== this.props.genders) {
             this.setState({
-                arrGender: this.props.data
+                arrGender: this.props.genders
+            })
+        }
+        if (prevProps.roles !== this.props.roles) {
+            this.setState({
+                arrRole: this.props.roles
+            })
+        }
+        if (prevProps.positions !== this.props.positions) {
+            this.setState({
+                arrPosition: this.props.positions
             })
         }
     }
 
     render() {
-        let genders = this.state.arrGender;
-        let language = this.props.language
+        let { arrGender, arrPosition, arrRole } = this.state
+        let { positions, roles, genders, language, isLoadingGender } = this.props;
         return (
             <div className="user-redux-container">
                 <div className='title my-3'>
                     <FormattedMessage id="manage-user.add" />
                 </div>
                 <div className='container'>
+                    <div className='col-md-12'>{isLoadingGender ? 'Loading data...' : ''}</div>
                     <form className="row g-3" href='#'>
                         <div className="col-md-3">
                             <label htmlFor="inputEmail4" className="form-label">
@@ -79,7 +93,7 @@ class UserRedux extends Component {
                             </label>
                             <select id="inputState" className="form-select">
                                 {
-                                    genders.map((item, index) => {
+                                    arrGender.map((item, index) => {
                                         return <option key={index}>{language === LANGUAGES.VI ? item.valueVi : item.valueEn}</option>
                                     })
                                 }
@@ -90,8 +104,11 @@ class UserRedux extends Component {
                                 <FormattedMessage id="manage-user.position" />
                             </label>
                             <select id="inputState" className="form-select">
-                                <option defaultValue>Choose...</option>
-                                <option>...</option>
+                                {
+                                    arrPosition.map((item, index) => {
+                                        return <option key={index}>{language === LANGUAGES.VI ? item.valueVi : item.valueEn}</option>
+                                    })
+                                }
                             </select>
                         </div>
                         <div className="col-md-3">
@@ -99,8 +116,11 @@ class UserRedux extends Component {
                                 <FormattedMessage id="manage-user.role" />
                             </label>
                             <select id="inputState" className="form-select">
-                                <option defaultValue>Choose...</option>
-                                <option>...</option>
+                                {
+                                    arrRole.map((item, index) => {
+                                        return <option key={index}>{language === LANGUAGES.VI ? item.valueVi : item.valueEn}</option>
+                                    })
+                                }
                             </select>
                         </div>
                         <div className="col-md-3">
@@ -126,13 +146,19 @@ class UserRedux extends Component {
 const mapStateToProps = state => {
     return {
         language: state.app.language,
-        data: state.admin.data
+        genders: state.admin.genders,
+        isLoadingGender: state.admin.isLoadingGender,
+        roles: state.admin.roles,
+        positions: state.admin.positions
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchGenderStart: () => dispatch(actions.fetchGenderStart())
+        fetchGenderStart: () => dispatch(actions.fetchGenderStart()),
+        fetchRoleStart: () => dispatch(actions.fetchRoleStart()),
+        fetchPositionStart: () => dispatch(actions.fetchPositionStart())
+
     };
 };
 
