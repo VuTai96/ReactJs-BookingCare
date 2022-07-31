@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { getAllCode } from '../../../services/userService'
 import { LANGUAGES } from '../../../utils';
 import * as actions from '../../../store/actions'
+import './UserRedux.scss'
+import Lightbox from 'react-image-lightbox';
+import 'react-image-lightbox/style.css'; // This only needs to be imported once in your app
+
 
 class UserRedux extends Component {
     constructor(props) {
@@ -11,7 +14,9 @@ class UserRedux extends Component {
         this.state = {
             arrGender: [],
             arrPosition: [],
-            arrRole: []
+            arrRole: [],
+            urlImage: '',
+            isOpen: false
         }
     }
 
@@ -39,9 +44,29 @@ class UserRedux extends Component {
         }
     }
 
+    handleUploadImage = (e) => {
+        console.log(e.target.files[0])
+        let file = e.target.files[0]
+        if (file) {
+            let urlLink = URL.createObjectURL(file)
+            this.setState({
+                urlImage: urlLink
+            })
+        }
+    }
+    handleOnclickViewImage = () => {
+        console.log('....', this.state.urlImage)
+        if (this.state.urlImage) {
+            this.setState({
+                isOpen: true
+            })
+        }
+    }
+
     render() {
-        let { arrGender, arrPosition, arrRole } = this.state
-        let { positions, roles, genders, language, isLoadingGender } = this.props;
+        let { arrGender, arrPosition, arrRole, urlImage, isOpen } = this.state
+        let { language, isLoadingGender } = this.props;
+        console.log(isOpen, urlImage)
         return (
             <div className="user-redux-container">
                 <div className='title my-3'>
@@ -124,10 +149,26 @@ class UserRedux extends Component {
                             </select>
                         </div>
                         <div className="col-md-3">
-                            <label htmlFor="inputImage" className="form-label">
+
+                            <label htmlFor="inputState" className="form-label">
                                 <FormattedMessage id="manage-user.image" />
                             </label>
-                            <input type="text" className="form-control" id="inputImage" />
+                            <div className='preview-image-container'>
+                                <label htmlFor="inputImage" className="label-upload" >
+                                    <FormattedMessage id="manage-user.upload" /><i class="fas fa-upload"></i>
+                                </label>
+                                <input type="file" className="form-control" id="inputImage" hidden onChange={(e) => this.handleUploadImage(e)} />
+                                <div className='preview-image'
+                                    onClick={() => this.handleOnclickViewImage()}
+                                    style={{
+                                        backgroundImage: `url("${urlImage}")`,
+                                        backgroundPosition: 'center',
+                                        backgroundSize: 'contain',
+                                        backgroundRepeat: 'no-repeat'
+                                    }}>
+                                </div>
+                            </div>
+
                         </div>
 
                         <div className="col-12">
@@ -137,6 +178,13 @@ class UserRedux extends Component {
                         </div>
                     </form>
                 </div>
+                {
+                    isOpen && (
+                        <Lightbox
+                            mainSrc={urlImage}
+                            onCloseRequest={() => this.setState({ isOpen: false })}
+                        />
+                    )}
             </div>
         )
     }
