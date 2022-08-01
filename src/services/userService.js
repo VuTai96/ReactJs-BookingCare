@@ -14,7 +14,7 @@ const handleLogin = async (username, password) => {
     // }
 }
 const getAllUser = (id) => {
-    return axios.get(`/api/get-all-user?id=${id}`)
+    return axios.get(`/api/get-all-user?id=${id}`) //id = 'ALL' or value
 }
 const createUser = (data) => {
     return axios.post('api/create-new-user', data)

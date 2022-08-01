@@ -6,6 +6,7 @@ import * as actions from '../../../store/actions'
 import './UserRedux.scss'
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css'; // This only needs to be imported once in your app
+import TableManageUser from './TableManageUser'
 
 
 class UserRedux extends Component {
@@ -56,6 +57,20 @@ class UserRedux extends Component {
                 positionId: this.props.positions[0].key
             })
         }
+        if (prevProps.listUser !== this.props.listUser) {
+            this.setState({
+                email: '',
+                password: '',
+                firstName: '',
+                lastName: '',
+                address: '',
+                gender: this.state.arrGender[0]?.key || '',
+                roleId: this.state.arrRole[0]?.key || '',
+                positionId: this.state.arrPosition[0]?.key || '',
+                phonenumber: '',
+                image: ''
+            })
+        }
     }
 
     handleUploadImage = (e) => {
@@ -98,6 +113,7 @@ class UserRedux extends Component {
         }
         //post api
         await this.props.createNewUser({ ...dataUser, image })
+        await this.props.fetchAllUser()
     }
     render() {
 
@@ -174,11 +190,12 @@ class UserRedux extends Component {
                                 <FormattedMessage id="manage-user.gender" />
                             </label>
                             <select id="inputGender" className="form-select"
+                                value={gender}
                                 onChange={(e) => this.handleOnchangeInput(e, 'gender')}
                             >
                                 {
                                     arrGender.map((item, index) => {
-                                        return <option key={index}>{language === LANGUAGES.VI ? item.valueVi : item.valueEn}</option>
+                                        return <option key={index} value={item.key}>{language === LANGUAGES.VI ? item.valueVi : item.valueEn}</option>
                                     })
                                 }
                             </select>
@@ -188,11 +205,12 @@ class UserRedux extends Component {
                                 <FormattedMessage id="manage-user.position" />
                             </label>
                             <select id="inputPosition" className="form-select"
+                                value={positionId}
                                 onChange={(e) => this.handleOnchangeInput(e, 'positionId')}
                             >
                                 {
                                     arrPosition.map((item, index) => {
-                                        return <option key={index}>{language === LANGUAGES.VI ? item.valueVi : item.valueEn}</option>
+                                        return <option key={index} value={item.key}>{language === LANGUAGES.VI ? item.valueVi : item.valueEn}</option>
                                     })
                                 }
                             </select>
@@ -202,11 +220,12 @@ class UserRedux extends Component {
                                 <FormattedMessage id="manage-user.role" />
                             </label>
                             <select id="inputRole" className="form-select"
+                                value={roleId}
                                 onChange={(e) => this.handleOnchangeInput(e, 'roleId')}
                             >
                                 {
                                     arrRole.map((item, index) => {
-                                        return <option key={index}>{language === LANGUAGES.VI ? item.valueVi : item.valueEn}</option>
+                                        return <option key={index} value={item.key}>{language === LANGUAGES.VI ? item.valueVi : item.valueEn}</option>
                                     })
                                 }
                             </select>
@@ -242,7 +261,11 @@ class UserRedux extends Component {
                             </button>
                         </div>
                     </form>
+
+
+                    <TableManageUser />
                 </div>
+
                 {
                     isOpen && (
                         <Lightbox
@@ -262,7 +285,8 @@ const mapStateToProps = state => {
         genders: state.admin.genders,
         isLoadingGender: state.admin.isLoadingGender,
         roles: state.admin.roles,
-        positions: state.admin.positions
+        positions: state.admin.positions,
+        listUser: state.admin.users
     };
 };
 
@@ -271,7 +295,8 @@ const mapDispatchToProps = dispatch => {
         fetchGenderStart: () => dispatch(actions.fetchGenderStart()),
         fetchRoleStart: () => dispatch(actions.fetchRoleStart()),
         fetchPositionStart: () => dispatch(actions.fetchPositionStart()),
-        createNewUser: (dataUser) => dispatch(actions.createNewUser(dataUser))
+        createNewUser: (dataUser) => dispatch(actions.createNewUser(dataUser)),
+        fetchAllUser: () => dispatch(actions.fetchAllUser()),
     };
 };
 
