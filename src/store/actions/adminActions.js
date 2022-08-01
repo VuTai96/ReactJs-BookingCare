@@ -1,5 +1,5 @@
 import actionTypes from './actionTypes';
-import { getAllCode } from '../../services/userService'
+import { getAllCode, createUser } from '../../services/userService'
 
 
 export const fetchGenderStart = () => {
@@ -24,6 +24,18 @@ export const fetchGenderStart = () => {
         }
     }
 }
+
+
+
+export const fetchGenderSuccess = (resData) => ({
+    type: actionTypes.FETCH_GENDER_SUCCESS,
+    genders: resData
+})
+
+export const fetchGenderFail = () => ({
+    type: actionTypes.FETCH_GENDER_FAIL
+})
+
 export const fetchRoleStart = () => {
     // This form is allowed by Redux Thunk middleware
     // described below in “Async Action Creators” section.
@@ -43,6 +55,15 @@ export const fetchRoleStart = () => {
         }
     }
 }
+export const fetchRoleSuccess = (resData) => ({
+    type: actionTypes.FETCH_ROLE_SUCCESS,
+    roles: resData
+})
+
+export const fetchRoleFail = () => ({
+    type: actionTypes.FETCH_ROLE_FAIL
+})
+
 export const fetchPositionStart = () => {
     // This form is allowed by Redux Thunk middleware
     // described below in “Async Action Creators” section.
@@ -61,24 +82,6 @@ export const fetchPositionStart = () => {
         }
     }
 }
-
-export const fetchGenderSuccess = (resData) => ({
-    type: actionTypes.FETCH_GENDER_SUCCESS,
-    genders: resData
-})
-
-export const fetchGenderFail = () => ({
-    type: actionTypes.FETCH_GENDER_FAIL
-})
-export const fetchRoleSuccess = (resData) => ({
-    type: actionTypes.FETCH_ROLE_SUCCESS,
-    roles: resData
-})
-
-export const fetchRoleFail = () => ({
-    type: actionTypes.FETCH_ROLE_FAIL
-})
-
 export const fetchPositonSuccess = (resData) => ({
     type: actionTypes.FETCH_POSITION_SUCCESS,
     positions: resData
@@ -87,5 +90,33 @@ export const fetchPositonSuccess = (resData) => ({
 export const fetchPositonFail = () => ({
     type: actionTypes.FETCH_POSITION_FAIL
 })
+
+export const createNewUser = (dataUser) => {
+    // This form is allowed by Redux Thunk middleware
+    // described below in “Async Action Creators” section.
+    return async (dispatch, getState) => {
+        try {
+            let res = await createUser(dataUser)
+            // console.log('res api: ', res)
+            if (res?.errCode === 0) {
+                dispatch(createUserSuccess())
+
+            } else {
+                dispatch(createUserFail())
+            }
+        } catch (e) {
+            dispatch(createUserFail())
+            console.log('fetchPositionStart error', e)
+        }
+    }
+}
+export const createUserSuccess = () => ({
+    type: actionTypes.CREATE_USER_SUCCESS,
+})
+
+export const createUserFail = () => ({
+    type: actionTypes.CREATE_USER_FAIL
+})
+
 
 

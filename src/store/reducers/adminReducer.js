@@ -50,6 +50,16 @@ const adminReducer = (state = initialState, action) => {
             return {
                 ...state,
             }
+        case actionTypes.CREATE_USER_SUCCESS:
+            console.log('Creat user is success!')
+            return {
+                ...state,
+            }
+        case actionTypes.CREATE_USER_FAIL:
+            console.log('Creat user is fail!')
+            return {
+                ...state,
+            }
 
         default:
             return state;
