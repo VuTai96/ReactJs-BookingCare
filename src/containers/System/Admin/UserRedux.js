@@ -82,11 +82,11 @@ class UserRedux extends Component {
         let file = e.target.files[0]
         if (file) {
             let res = await CommonUtils.toBase64(file)
-            console.log('upload image', res)
             this.setState({
                 urlImage: res,
                 image: file
             })
+            e.target.value = null
         }
     }
     handleOnclickViewImage = () => {
@@ -107,7 +107,6 @@ class UserRedux extends Component {
         let arrId = ['email', 'password', 'firstName', 'lastName', 'address', 'gender',
             'roleId', 'positionId', 'phonenumber'];
         let image = this.state.urlImage
-        console.log('check url imange', image)
         let dataUser = {}
         for (const id of arrId) {
             if (!this.state[id]) {
@@ -130,7 +129,6 @@ class UserRedux extends Component {
         console.log('check dt', user.image)
         if (user.image) {
             deco = CommonUtils.Base64ToImage(user.image)
-            CommonUtils.Base64ToImage1(user.image)
         }
         this.setState({
             userId: user.id,
@@ -271,10 +269,9 @@ class UserRedux extends Component {
                             </label>
                             <div className='preview-image-container'>
                                 <label htmlFor="inputImage" className="label-upload" >
-                                    <FormattedMessage id="manage-user.upload" /><i class="fas fa-upload"></i>
+                                    <FormattedMessage id="manage-user.upload" /><i className="fas fa-upload"></i>
                                 </label>
-                                <input type="file" className="form-control" id="inputImage" hidden
-                                    value={image}
+                                <input type="file" className="form-control" id="inputImage"
                                     onChange={(e) => this.handleUploadImage(e)}
                                 />
                                 <div className='preview-image'
