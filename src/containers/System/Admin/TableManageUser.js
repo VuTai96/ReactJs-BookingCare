@@ -28,6 +28,9 @@ class TableManageUser extends Component {
         await this.props.deleteAUser(item)
         await this.props.fetchAllUser()
     }
+    handleClickEdit = (item) => {
+        this.props.editUserforprops(item)
+    }
 
     render() {
         let { listUser } = this.state

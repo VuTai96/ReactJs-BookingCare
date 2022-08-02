@@ -51,6 +51,7 @@
         "role": "Role",
         "image": "Avata",
         "save": "Save user",
-        "upload": "Upload image"
+        "upload": "Upload image",
+        "saveChange": "Save change"
     }
 }

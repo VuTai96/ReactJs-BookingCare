@@ -1,5 +1,5 @@
 import actionTypes from './actionTypes';
-import { getAllCode, createUser, getAllUser, deleteUser } from '../../services/userService'
+import { getAllCode, createUser, getAllUser, deleteUser, updateUser } from '../../services/userService'
 import { toast } from "react-toastify"
 
 export const fetchGenderStart = () => {
@@ -177,5 +177,35 @@ export const deleteUserSuccess = () => ({
 
 export const deleteUserFail = () => ({
     type: actionTypes.DELETE_USER_FAIL
+})
+
+export const editAUser = (userData) => {
+    // This form is allowed by Redux Thunk middleware
+    // described below in “Async Action Creators” section.
+    return async (dispatch, getState) => {
+        try {
+            let res = await updateUser(userData)
+            // console.log('res api: ', res)
+            if (res?.errCode === 0) {
+                toast.success('Edit user success!')
+                dispatch(editUserSuccess())
+
+            } else {
+                toast.error('Edit user failed!')
+                dispatch(editUserFail())
+            }
+        } catch (e) {
+            toast.error('Edit user error!')
+            dispatch(editUserFail())
+            console.log('editAUser error', e)
+        }
+    }
+}
+export const editUserSuccess = () => ({
+    type: actionTypes.EDIT_USER_SUCCESS,
+})
+
+export const editUserFail = () => ({
+    type: actionTypes.EDIT_USER_FAIL
 })
 

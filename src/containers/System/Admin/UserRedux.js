@@ -7,6 +7,7 @@ import './UserRedux.scss'
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css'; // This only needs to be imported once in your app
 import TableManageUser from './TableManageUser'
+import { CRUD_STATE } from '../../../utils'
 
 
 class UserRedux extends Component {
@@ -19,6 +20,7 @@ class UserRedux extends Component {
             urlImage: '',
             isOpen: false,
 
+            userId: '',
             email: '',
             password: '',
             firstName: '',
@@ -28,7 +30,9 @@ class UserRedux extends Component {
             roleId: '',
             positionId: '',
             phonenumber: '',
-            image: ''
+            image: '',
+
+            crud_state: CRUD_STATE.CREATE
         }
     }
 
@@ -68,11 +72,11 @@ class UserRedux extends Component {
                 roleId: this.state.arrRole[0]?.key || '',
                 positionId: this.state.arrPosition[0]?.key || '',
                 phonenumber: '',
-                image: ''
+                image: '',
+                crud_state: CRUD_STATE.CREATE
             })
         }
     }
-
     handleUploadImage = (e) => {
         let file = e.target.files[0]
         if (file) {
@@ -96,8 +100,6 @@ class UserRedux extends Component {
         this.setState({
             ...coppyState
         })
-
-
     }
     handleOnclickSubmit = async () => {
         let arrId = ['email', 'password', 'firstName', 'lastName', 'address', 'gender',
@@ -111,15 +113,37 @@ class UserRedux extends Component {
             }
             dataUser[id] = this.state[id]
         }
-        //post api
-        await this.props.createNewUser({ ...dataUser, image })
-        await this.props.fetchAllUser()
+        if (this.state.crud_state === CRUD_STATE.EDIT) {
+            dataUser.id = this.state.userId
+            await this.props.editAUser({ ...dataUser, image })
+            await this.props.fetchAllUser()
+        } else {
+            await this.props.createNewUser({ ...dataUser, image })
+            await this.props.fetchAllUser()
+        }
     }
-    render() {
+    editUserforprops = (user) => {
+        console.log(user)
+        this.setState({
+            userId: user.id,
+            email: user.email,
+            password: 'HARDCODE',
+            firstName: user.firstName,
+            lastName: user.lastName,
+            address: user.address,
+            gender: user.gender,
+            roleId: user.roleId,
+            positionId: user.positionId,
+            phonenumber: user.phonenumber,
+            image: user.image,
+            crud_state: CRUD_STATE.EDIT
+        })
+    }
 
+    render() {
         let { arrGender, arrPosition, arrRole, urlImage, isOpen,
             email, password, firstName, lastName, address, gender,
-            roleId, positionId, phonenumber, image } = this.state
+            roleId, positionId, phonenumber, image, crud_state } = this.state
         let { language, isLoadingGender } = this.props;
 
         return (
@@ -137,6 +161,7 @@ class UserRedux extends Component {
                             <input type="email" className="form-control" id="inputEmail4"
                                 value={email}
                                 onChange={(e) => this.handleOnchangeInput(e, 'email')}
+                                disabled={crud_state === CRUD_STATE.EDIT ? true : false}
                             />
                         </div>
                         <div className="col-md-3">
@@ -146,6 +171,7 @@ class UserRedux extends Component {
                             <input type="password" className="form-control" id="inputPassword4"
                                 value={password}
                                 onChange={(e) => this.handleOnchangeInput(e, 'password')}
+                                disabled={crud_state === CRUD_STATE.EDIT ? true : false}
                             />
                         </div>
                         <div className="col-md-3">
@@ -254,16 +280,24 @@ class UserRedux extends Component {
                         </div>
 
                         <div className="col-12">
-                            <button type="button" className="btn btn-primary"
+                            <button type="button"
+                                className={crud_state === CRUD_STATE.EDIT ? "btn btn-warning" : "btn btn-primary"}
                                 onClick={() => this.handleOnclickSubmit()}
                             >
-                                <FormattedMessage id="manage-user.save" />
+                                {
+                                    crud_state === CRUD_STATE.EDIT ?
+                                        <FormattedMessage id="manage-user.saveChange" />
+                                        :
+                                        <FormattedMessage id="manage-user.save" />
+                                }
                             </button>
                         </div>
                     </form>
 
 
-                    <TableManageUser />
+                    <TableManageUser
+                        editUserforprops={this.editUserforprops}
+                    />
                 </div>
 
                 {
@@ -297,6 +331,7 @@ const mapDispatchToProps = dispatch => {
         fetchPositionStart: () => dispatch(actions.fetchPositionStart()),
         createNewUser: (dataUser) => dispatch(actions.createNewUser(dataUser)),
         fetchAllUser: () => dispatch(actions.fetchAllUser()),
+        editAUser: (dataUser) => dispatch(actions.editAUser(dataUser))
     };
 };
 

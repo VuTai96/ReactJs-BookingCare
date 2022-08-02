@@ -51,6 +51,7 @@
         "role": "Vài trò",
         "image": "Ảnh",
         "save": "Lưu user",
-        "upload": "Tải ảnh"
+        "upload": "Tải ảnh",
+        "saveChange": "Lưu thay đổi"
     }
 }
