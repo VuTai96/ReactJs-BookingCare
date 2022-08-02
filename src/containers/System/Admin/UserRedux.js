@@ -129,10 +129,9 @@ class UserRedux extends Component {
         let deco = '';
         console.log('check dt', user.image)
         if (user.image) {
-            let uint8Array = new Uint8Array(user.image.data)
-            deco = new TextDecoder().decode(uint8Array)
+            deco = CommonUtils.Base64ToImage(user.image)
+            CommonUtils.Base64ToImage1(user.image)
         }
-        console.log('check deco', deco)
         this.setState({
             userId: user.id,
             email: user.email,
