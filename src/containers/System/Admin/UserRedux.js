@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { LANGUAGES } from '../../../utils';
+import { LANGUAGES, CommonUtils, CRUD_STATE } from '../../../utils';
 import * as actions from '../../../store/actions'
 import './UserRedux.scss'
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css'; // This only needs to be imported once in your app
 import TableManageUser from './TableManageUser'
-import { CRUD_STATE } from '../../../utils'
+
 
 
 class UserRedux extends Component {
@@ -73,16 +73,18 @@ class UserRedux extends Component {
                 positionId: this.state.arrPosition[0]?.key || '',
                 phonenumber: '',
                 image: '',
+                urlImage: '',
                 crud_state: CRUD_STATE.CREATE
             })
         }
     }
-    handleUploadImage = (e) => {
+    handleUploadImage = async (e) => {
         let file = e.target.files[0]
         if (file) {
-            let urlLink = URL.createObjectURL(file)
+            let res = await CommonUtils.toBase64(file)
+            console.log('upload image', res)
             this.setState({
-                urlImage: urlLink,
+                urlImage: res,
                 image: file
             })
         }
@@ -105,6 +107,7 @@ class UserRedux extends Component {
         let arrId = ['email', 'password', 'firstName', 'lastName', 'address', 'gender',
             'roleId', 'positionId', 'phonenumber'];
         let image = this.state.urlImage
+        console.log('check url imange', image)
         let dataUser = {}
         for (const id of arrId) {
             if (!this.state[id]) {
@@ -123,7 +126,13 @@ class UserRedux extends Component {
         }
     }
     editUserforprops = (user) => {
-        console.log(user)
+        let deco = '';
+        console.log('check dt', user.image)
+        if (user.image) {
+            let uint8Array = new Uint8Array(user.image.data)
+            deco = new TextDecoder().decode(uint8Array)
+        }
+        console.log('check deco', deco)
         this.setState({
             userId: user.id,
             email: user.email,
@@ -135,7 +144,7 @@ class UserRedux extends Component {
             roleId: user.roleId,
             positionId: user.positionId,
             phonenumber: user.phonenumber,
-            image: user.image,
+            urlImage: deco,
             crud_state: CRUD_STATE.EDIT
         })
     }
@@ -265,7 +274,10 @@ class UserRedux extends Component {
                                 <label htmlFor="inputImage" className="label-upload" >
                                     <FormattedMessage id="manage-user.upload" /><i class="fas fa-upload"></i>
                                 </label>
-                                <input type="file" className="form-control" id="inputImage" hidden onChange={(e) => this.handleUploadImage(e)} />
+                                <input type="file" className="form-control" id="inputImage" hidden
+                                    value={image}
+                                    onChange={(e) => this.handleUploadImage(e)}
+                                />
                                 <div className='preview-image'
                                     onClick={() => this.handleOnclickViewImage()}
                                     style={{
