@@ -6,43 +6,37 @@ import { SampleNextArrow, SamplePrevArrow } from './PreNextArrow'
 import './Sections.scss'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import * as actions from '../../../store/actions'
+import { LANGUAGES } from '../../../utils';
+import CommonUtils from '../../../utils/CommonUtils'
 
-// function SampleNextArrow(props) {
-//     const { className, style, onClick } = props;
-//     return (
-//         <div
-//             className='nextstyle'
-//             // style={{ ...style, display: "block", background: "red" }}
-//             onClick={onClick}
-//         >
-//             <i class="fas fa-chevron-right"></i>
-//         </div>
-//     );
-// }
-
-// function SamplePrevArrow(props) {
-//     const { className, style, onClick } = props;
-//     return (
-//         <div
-//             className='prestyle'
-//             // style={{
-//             //     ...style, display: "inline-block", background: "green"
-//             // }}
-//             onClick={onClick}
-//         >
-//             <i class="fas fa-chevron-left"></i>
-//         </div>
-//     );
-// }
 class OutStandingDoctor extends Component {
-    render() {
+    constructor(props) {
+        super(props);
+        this.state = {
+            arrDoctors: []
+        }
+    }
 
+    async componentDidMount() {
+        await this.props.fetchTopDoctorRedux('')
+    }
+    componentDidUpdate(preProps, PreState, snapshot) {
+        if (preProps.topDoctorRedux !== this.props.topDoctorRedux) {
+            this.setState({
+                arrDoctors: this.props.topDoctorRedux
+            })
+        }
+    }
+    render() {
+        let { arrDoctors } = this.state
+        let { language } = this.props
         let settings = {
             className: "slider variable-width",
             dots: false,
             infinite: true,
             speed: 500,
-            slidesToShow: 4,
+            slidesToShow: arrDoctors.length >= 4 ? 4 : 1,
             slidesToScroll: 1,
             nextArrow: <SampleNextArrow />,
             prevArrow: <SamplePrevArrow />
@@ -56,42 +50,34 @@ class OutStandingDoctor extends Component {
                     </div>
                     <div className='section-body'>
                         <Slider {...settings}>
-                            <div className='image-section3'>
-                                <div className='div-image'>                                </div>
-                                <h5>Bác sĩ bệnh viện chợ rẫy</h5>
-                                <p>Đa khoa</p>
+                            {arrDoctors.map((item, index) => {
+                                let urlImage = ''
 
-                            </div>
-                            <div className='image-section3'>
-                                <div className='div-image'>                                </div>
-                                <h5>Bác sĩ bệnh viện chợ rẫy</h5>
-                                <p>Đa khoa</p>
+                                if (item.image) {
+                                    urlImage = CommonUtils.Base64ToImage(item.image)
+                                }
 
-                            </div>
-                            <div className='image-section3'>
-                                <div className='div-image'>                                </div>
-                                <h5>Bác sĩ bệnh viện chợ rẫy</h5>
-                                <p>Đa khoa</p>
+                                let nameVi = `${item.positionData.valueVi} ${item.lastName} ${item.firstName}`;
+                                let nameEn = `${item.positionData.valueEn}  ${item.firstName} ${item.lastName}`;
+                                return (
+                                    <div className='image-section3' key={index} >
+                                        {/* style={{ backgroundImage: `url(${urlImage})` }} */}
 
-                            </div>
-                            <div className='image-section3'>
-                                <div className='div-image'>                                </div>
-                                <h5>Bác sĩ bệnh viện chợ rẫy</h5>
-                                <p>Đa khoa</p>
 
-                            </div>
-                            <div className='image-section3'>
-                                <div className='div-image'>                                </div>
-                                <h5>Bác sĩ bệnh viện chợ rẫy</h5>
-                                <p>Đa khoa</p>
+                                        <div className='div-image'
+                                            style={{
+                                                backgroundImage: `url("${urlImage}")`,
+                                                backgroundPosition: 'center',
+                                                backgroundSize: 'cover',
+                                                backgroundRepeat: 'no-repeat'
+                                            }}></div>
+                                        <h5>{language === LANGUAGES.VI ? nameVi : nameEn}</h5>
+                                        <p>Đa khoa</p>
 
-                            </div>
-                            <div className='image-section3'>
-                                <div className='div-image'>                                </div>
-                                <h5>Bác sĩ bệnh viện chợ rẫy</h5>
-                                <p>Đa khoa</p>
-
-                            </div>
+                                    </div>
+                                )
+                            })
+                            }
                         </Slider>
                     </div>
                 </div>
@@ -104,13 +90,14 @@ class OutStandingDoctor extends Component {
 const mapStateToProps = state => {
     return {
         isLoggedIn: state.user.isLoggedIn,
-        language: state.app.language
+        language: state.app.language,
+        topDoctorRedux: state.admin.topDoctor
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-
+        fetchTopDoctorRedux: (limit) => dispatch(actions.fetchTopDoctor(limit))
     };
 };
 

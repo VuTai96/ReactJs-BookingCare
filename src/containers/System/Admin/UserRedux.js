@@ -46,19 +46,19 @@ class UserRedux extends Component {
         if (prevProps.genders !== this.props.genders) {
             this.setState({
                 arrGender: this.props.genders,
-                gender: this.props.genders[0].key
+                gender: this.props.genders[0].keyMap
             })
         }
         if (prevProps.roles !== this.props.roles) {
             this.setState({
                 arrRole: this.props.roles,
-                roleId: this.props.roles[0].key
+                roleId: this.props.roles[0].keyMap
             })
         }
         if (prevProps.positions !== this.props.positions) {
             this.setState({
                 arrPosition: this.props.positions,
-                positionId: this.props.positions[0].key
+                positionId: this.props.positions[0].keyMap
             })
         }
         if (prevProps.listUser !== this.props.listUser) {
@@ -68,9 +68,9 @@ class UserRedux extends Component {
                 firstName: '',
                 lastName: '',
                 address: '',
-                gender: this.state.arrGender[0]?.key || '',
-                roleId: this.state.arrRole[0]?.key || '',
-                positionId: this.state.arrPosition[0]?.key || '',
+                gender: this.state.arrGender[0]?.keyMap || '',
+                roleId: this.state.arrRole[0]?.keyMap || '',
+                positionId: this.state.arrPosition[0]?.keyMap || '',
                 phonenumber: '',
                 image: '',
                 urlImage: '',
@@ -227,7 +227,7 @@ class UserRedux extends Component {
                             >
                                 {
                                     arrGender.map((item, index) => {
-                                        return <option key={index} value={item.key}>{language === LANGUAGES.VI ? item.valueVi : item.valueEn}</option>
+                                        return <option key={index} value={item.keyMap}>{language === LANGUAGES.VI ? item.valueVi : item.valueEn}</option>
                                     })
                                 }
                             </select>
@@ -242,7 +242,7 @@ class UserRedux extends Component {
                             >
                                 {
                                     arrPosition.map((item, index) => {
-                                        return <option key={index} value={item.key}>{language === LANGUAGES.VI ? item.valueVi : item.valueEn}</option>
+                                        return <option key={index} value={item.keyMap}>{language === LANGUAGES.VI ? item.valueVi : item.valueEn}</option>
                                     })
                                 }
                             </select>
@@ -257,7 +257,7 @@ class UserRedux extends Component {
                             >
                                 {
                                     arrRole.map((item, index) => {
-                                        return <option key={index} value={item.key}>{language === LANGUAGES.VI ? item.valueVi : item.valueEn}</option>
+                                        return <option key={index} value={item.keyMap}>{language === LANGUAGES.VI ? item.valueVi : item.valueEn}</option>
                                     })
                                 }
                             </select>
@@ -271,7 +271,7 @@ class UserRedux extends Component {
                                 <label htmlFor="inputImage" className="label-upload" >
                                     <FormattedMessage id="manage-user.upload" /><i className="fas fa-upload"></i>
                                 </label>
-                                <input type="file" className="form-control" id="inputImage"
+                                <input type="file" className="form-control" id="inputImage" hidden
                                     onChange={(e) => this.handleUploadImage(e)}
                                 />
                                 <div className='preview-image'
@@ -301,7 +301,6 @@ class UserRedux extends Component {
                             </button>
                         </div>
                     </form>
-
 
                     <TableManageUser
                         editUserforprops={this.editUserforprops}

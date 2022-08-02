@@ -28,5 +28,8 @@ const updateUser = (data) => {
 const getAllCode = (type) => {
     return axios.get(`/api/allcode?type=${type}`)
 }
+const getTopDoctorHomeService = (limit) => {
+    return axios.get(`/api/top-doctor-home?limit=${limit}`)
+}
 export default handleLogin
-export { getAllUser, createUser, deleteUser, updateUser, getAllCode }
+export { getAllUser, createUser, deleteUser, updateUser, getAllCode, getTopDoctorHomeService }

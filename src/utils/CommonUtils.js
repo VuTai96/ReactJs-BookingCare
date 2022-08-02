@@ -20,6 +20,8 @@ class CommonUtils {
         let uint8Array = new Uint8Array(image.data)
         let deco = new TextDecoder().decode(uint8Array)
         return deco
+
+
     }
     //cách 2 base64 to image
     // static Base64ToImage1 = (image) => {
