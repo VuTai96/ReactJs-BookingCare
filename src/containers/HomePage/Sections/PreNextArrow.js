@@ -2,7 +2,7 @@ function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
         <div
-            className='nextstyle'
+            className={className} //'nextstyle slick-disabled'
             // style={{ ...style, display: "block", background: "red" }}
             onClick={onClick}
         >
@@ -15,7 +15,8 @@ function SamplePrevArrow(props) {
     const { className, style, onClick } = props;
     return (
         <div
-            className='prestyle'
+            className={className}
+            // className='prestyle slick-disabled'
             // style={{
             //     ...style, display: "inline-block", background: "green"
             // }}

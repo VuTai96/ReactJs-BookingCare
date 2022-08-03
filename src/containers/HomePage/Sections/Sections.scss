@@ -71,6 +71,11 @@ $myWidthimage  : 300px;
 
         .section-body {
 
+            .slick-initialized .slick-slide {
+                display        : flex;
+                justify-content: center;
+            }
+
             .image-section {
                 width : 300px !important;
                 height: 215px !important;
@@ -109,22 +114,22 @@ $myWidthimage  : 300px;
 
             .image-section3 {
                 border          : 1px solid #8080805c;
-                background-color: #d167670a;
+                background-color: #2422220a;
                 text-align      : center;
                 width           : 300px !important;
                 height          : 215px !important;
                 margin          : 0 auto !important;
 
-                width: 200px;
-
                 .div-image {
                     background     : url(../../../assets/sectionsImage/bac-si-cho-ray.jpg) center center no-repeat;
-                    height         : 120px;
-                    width          : 120px;
+                    height         : 130px;
+                    width          : 130px;
                     background-size: contain;
                     border-radius  : 50%;
                     background-size: 117px 118px;
                     margin         : 0 auto;
+                    margin-top     : 10px !important;
+
                 }
 
                 &:hover {
@@ -154,18 +159,25 @@ $myWidthimage  : 300px;
                 }
             }
 
-            .prestyle {
-                width           : 45px;
-                height          : $myHeighPre;
+            .slick-prev,
+            .slick-next {
+                font-size       : 0;
+                line-height     : 0;
                 position        : absolute;
-                top             : $myHeightimage/2 - $myHeighPre/2;
-                left            : -10px;
-                z-index         : 1000;
+                top             : 50%;
+                display         : block;
+                width           : 45px;
+                height          : 45px;
+                transform       : translate(0, -50%);
+                cursor          : pointer;
+                border          : none;
+                outline         : none;
                 background-color: rgb(229, 221, 221);
                 display         : flex;
                 align-items     : center;
                 justify-content : center;
                 opacity         : 0.8;
+                z-index         : 1000;
 
                 i {
                     font-size: 30px;
@@ -175,25 +187,28 @@ $myWidthimage  : 300px;
 
             }
 
-            .nextstyle {
-                width           : 45px;
-                height          : $myHeighPre;
-                position        : absolute;
-                top             : $myHeightimage/2 - $myHeighPre/2;
-                right           : -10px;
-                z-index         : 1000;
-                background-color: rgb(229, 221, 221);
-                display         : flex;
-                align-items     : center;
-                justify-content : center;
-                opacity         : 0.8;
+            .slick-prev:before {
+                content: '←';
+            }
+
+            .slick-next:before {
+                content: '→';
+            }
+
+            .slick-prev:before,
+            .slick-next:before {
+                font-family            : 'slick';
+                font-size              : 0px;
+                line-height            : 1;
+                opacity                : .75;
+                color                  : white;
+                -webkit-font-smoothing : antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
 
 
-                i {
-                    font-size: 30px;
-                    opacity  : 0.5;
-                    color    : rgb(36, 28, 28);
-                }
+            .slick-disabled {
+                display: none;
             }
         }
     }

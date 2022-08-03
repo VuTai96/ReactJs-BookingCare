@@ -34,8 +34,8 @@ class OutStandingDoctor extends Component {
         let settings = {
             className: "slider variable-width",
             dots: false,
-            infinite: true,
-            speed: 500,
+            infinite: false,
+            speed: 250,
             slidesToShow: arrDoctors.length >= 4 ? 4 : 1,
             slidesToScroll: 1,
             nextArrow: <SampleNextArrow />,
@@ -45,8 +45,8 @@ class OutStandingDoctor extends Component {
             <div className='homepage-section first'>
                 <div className='section-content'>
                     <div className='section-header'>
-                        <h2>Bác sĩ nổi bật tuần qua</h2>
-                        <button>Xem thêm</button>
+                        <h2><FormattedMessage id="homepage.top-doctor" /></h2>
+                        <button><FormattedMessage id="homepage.more-infor" /></button>
                     </div>
                     <div className='section-body'>
                         <Slider {...settings}>

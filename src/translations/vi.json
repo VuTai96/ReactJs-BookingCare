@@ -53,5 +53,9 @@
         "save": "Lưu user",
         "upload": "Tải ảnh",
         "saveChange": "Lưu thay đổi"
+    },
+    "homepage": {
+        "top-doctor": "Bác sĩ nổi bật tuần qua",
+        "more-infor": "Xem thêm"
     }
 }

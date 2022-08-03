@@ -53,5 +53,9 @@
         "save": "Save user",
         "upload": "Upload image",
         "saveChange": "Save change"
+    },
+    "homepage": {
+        "top-doctor": "Last week's featured doctor",
+        "more-infor": "More infor"
     }
 }

@@ -40,7 +40,7 @@ class Specailty extends Component {
         let settings = {
             dots: false,
             infinite: true,
-            speed: 500,
+            speed: 250,
             slidesToShow: 4,
             slidesToScroll: 1,
             nextArrow: <SampleNextArrow />,
