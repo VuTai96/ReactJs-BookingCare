@@ -159,6 +159,14 @@ $myWidthimage  : 300px;
                 }
             }
 
+            .slick-prev {
+                left: -10px
+            }
+
+            .slick-next {
+                right: -10px
+            }
+
             .slick-prev,
             .slick-next {
                 font-size       : 0;
