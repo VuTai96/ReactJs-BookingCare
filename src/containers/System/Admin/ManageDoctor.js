@@ -7,6 +7,7 @@ import MdEditor from 'react-markdown-editor-lite';
 import 'react-markdown-editor-lite/lib/index.css';
 import './ManageDoctor.scss'
 import Select from 'react-select';
+import { LANGUAGES } from '../../../utils/constant'
 
 const options = [
     { value: 'chocolate', label: 'Chocolate' },
@@ -16,21 +17,53 @@ const options = [
 
 const mdParser = new MarkdownIt(/* Markdown-it options */);
 
-class TableManageUser extends Component {
+class ManageDoctor extends Component {
     constructor(props) {
         super(props)
         this.state = {
             contentMarkdown: '',
             contentHTML: '',
             selectedDoctor: '',
-            description: ''
+            optionDoctors: [],
+            description: '',
         }
     }
-    componentDidMount() {
+    async componentDidMount() {
+        await this.props.fetchAllDoctors()
 
+    }
+    setOptionDoctor = (doctors) => {
+        let option = [];
+        doctors.map((item, index) => {
+            let obj = {}
+            if (this.props.language === LANGUAGES.VI) {
+                obj.label = `${item.lastName} ${item.firstName}`
+                obj.value = item.id
+            }
+            if (this.props.language === LANGUAGES.EN) {
+                obj.label = `${item.firstName} ${item.lastName}`
+                obj.value = item.id
+            }
+            option.push(obj)
+        })
+        return option
     }
     componentDidUpdate(prevProps, prevState, snapshot) {
 
+        if (prevProps.doctors !== this.props.doctors) {
+            let option = this.setOptionDoctor(this.props.doctors)
+            this.setState({
+                optionDoctors: option
+            })
+        }
+        if (prevProps.language !== this.props.language) {
+            let option = this.setOptionDoctor(this.props.doctors)
+            let a = option.filter(item => item.value === this.state.selectedDoctor.value)
+            this.setState({
+                optionDoctors: option,
+                selectedDoctor: a[0] || ''
+            })
+        }
     }
     handleEditorChange = ({ html, text }) => {
         this.setState({
@@ -43,8 +76,18 @@ class TableManageUser extends Component {
             selectedDoctor
         })
     }
-    handleSaveContentMarkdown = () => {
-        console.log('>>>Check state', this.state)
+    handleSaveContentMarkdown = async () => {
+        let detailDoctor = {
+            contentMarkdown: this.state.contentMarkdown,
+            contentHTML: this.state.contentHTML,
+            description: this.state.description,
+            doctorId: this.state.selectedDoctor.value
+        }
+        await this.props.saveDetailDoctor(detailDoctor)
+        this.setState({
+            selectedDoctor: '',
+            description: '',
+        })
     }
     handleOnchangeDesc = (e) => {
         this.setState({
@@ -52,7 +95,7 @@ class TableManageUser extends Component {
         })
     }
     render() {
-        const { selectedDoctor, description } = this.state;
+        const { selectedDoctor, description, optionDoctors } = this.state;
         return (
             <div className='container'>
                 <div className='row'>
@@ -64,7 +107,7 @@ class TableManageUser extends Component {
                         <Select
                             value={selectedDoctor}
                             onChange={this.handleChange}
-                            options={options}
+                            options={optionDoctors}
                         />
                     </div>
 
@@ -92,15 +135,16 @@ class TableManageUser extends Component {
 }
 const mapStateToProps = state => {
     return {
-        users: state.admin.users
+        doctors: state.admin.allDoctors,
+        language: state.app.language
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchAllUser: () => dispatch(actions.fetchAllUser()),
-        deleteAUser: (userId) => dispatch(actions.deleteAUser(userId)),
+        fetchAllDoctors: () => dispatch(actions.fetchAllDoctors()),
+        saveDetailDoctor: (detailDoctor) => dispatch(actions.saveDetailDoctor(detailDoctor))
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TableManageUser);
+export default connect(mapStateToProps, mapDispatchToProps)(ManageDoctor);

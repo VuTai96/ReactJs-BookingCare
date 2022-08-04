@@ -1,5 +1,8 @@
 import actionTypes from './actionTypes';
-import { getAllCode, createUser, getAllUser, deleteUser, updateUser, getTopDoctorHomeService } from '../../services/userService'
+import {
+    getAllCode, createUser, getAllUser, deleteUser, updateUser,
+    getTopDoctorHomeService, getAllDoctors, postDetailDoctor
+} from '../../services/userService'
 import { toast } from "react-toastify"
 
 export const fetchGenderStart = () => {
@@ -230,6 +233,56 @@ export const fetchTopDoctor = (limit) => {
             dispatch({
                 type: actionTypes.FETCH_TOP_DOCTOR_FAIL,
                 data: []
+            })
+            console.log('editAUser error', e)
+        }
+    }
+}
+export const fetchAllDoctors = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllDoctors();
+            if (res?.errCode === 0) {
+                dispatch({
+                    type: actionTypes.FETCH_ALL_DOCTOR_SUCCESS,
+                    data: res.doctors
+                })
+
+            } else {
+                dispatch({
+                    type: actionTypes.FETCH_ALL_DOCTOR_FAIL,
+                    data: []
+                })
+            }
+        } catch (e) {
+            dispatch({
+                type: actionTypes.FETCH_ALL_DOCTOR_FAIL,
+                data: []
+            })
+            console.log('editAUser error', e)
+        }
+    }
+}
+
+export const saveDetailDoctor = (detailDoctor) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await postDetailDoctor(detailDoctor);
+            if (res?.errCode === 0) {
+                toast.success(res.message)
+                dispatch({
+                    type: actionTypes.SAVE_DETAIL_DOCTOR_SUCCESS,
+                })
+            } else {
+                toast.success(res.message)
+                dispatch({
+                    type: actionTypes.SAVE_DETAIL_DOCTOR_FAIL,
+                })
+            }
+        } catch (e) {
+            toast.success('saveDetailDoctor is error')
+            dispatch({
+                type: actionTypes.SAVE_DETAIL_DOCTOR_FAIL,
             })
             console.log('editAUser error', e)
         }
