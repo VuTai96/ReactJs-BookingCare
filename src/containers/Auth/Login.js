@@ -60,10 +60,18 @@ class Login extends Component {
 
         //console.log(this.state)
     }
+    handleKeyPress = (event) => {
+        console.log('enter press here! ')
+
+        if (event.key === 'Enter') {
+            this.handleLogin()
+        }
+    }
     render() {
 
         return (
-            <div className='login-background'>
+            <div className='login-background'
+                onKeyDown={(event) => this.handleKeyPress(event)}>
                 <div className='login-container'>
                     <div className='login-content row'>
                         <div className='col-12 text-center header-login'>Login</div>
@@ -101,6 +109,7 @@ class Login extends Component {
                             <button
                                 className="btn-login"
                                 onClick={() => this.handleLogin()}
+
                             >
                                 Login
                             </button>

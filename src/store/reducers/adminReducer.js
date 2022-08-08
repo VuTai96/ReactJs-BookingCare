@@ -8,6 +8,7 @@ const initialState = {
     users: [],
     topDoctor: [],
     allDoctors: [],
+    rangeTime: []
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -94,6 +95,16 @@ const adminReducer = (state = initialState, action) => {
             return {
                 ...state,
                 allDoctors: action.data
+            }
+        case actionTypes.FETCH_SCHEDULE_TIME_SUCCESS:
+            return {
+                ...state,
+                rangeTime: action.data
+            }
+        case actionTypes.FETCH_SCHEDULE_TIME_FAIL:
+            return {
+                ...state,
+                rangeTime: []
             }
 
         default:

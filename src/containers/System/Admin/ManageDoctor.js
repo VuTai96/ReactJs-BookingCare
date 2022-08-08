@@ -11,12 +11,6 @@ import { LANGUAGES } from '../../../utils/constant'
 import { getDetailDoctor, updateDetailDoctor } from '../../../services/userService'
 import { toast } from 'react-toastify';
 
-const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' },
-];
-
 const mdParser = new MarkdownIt(/* Markdown-it options */);
 
 class ManageDoctor extends Component {

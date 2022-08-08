@@ -288,3 +288,29 @@ export const saveDetailDoctor = (detailDoctor) => {
         }
     }
 }
+
+export const fetchScheduleTime = (Type) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllCode(Type);
+            if (res?.errCode === 0) {
+                toast.success(res.message)
+                dispatch({
+                    type: actionTypes.FETCH_SCHEDULE_TIME_SUCCESS,
+                    data: res.data
+                })
+            } else {
+                toast.success(res.message)
+                dispatch({
+                    type: actionTypes.FETCH_SCHEDULE_TIME_FAIL,
+                })
+            }
+        } catch (e) {
+            toast.success('saveDetailDoctor is error')
+            dispatch({
+                type: actionTypes.FETCH_SCHEDULE_TIME_FAIL,
+            })
+            console.log('editAUser error', e)
+        }
+    }
+}
