@@ -34,10 +34,14 @@ const postDetailDoctor = (detailDoctor) => {
 const getDetailDoctor = (doctorId) => {
     return axios.get(`/api/get-detail-doctor-by-id?id=${doctorId}`)
 }
+const updateDetailDoctor = (data) => {
+    return axios.put('/api/update-infor-doctor', data)
+}
 
 export default handleLogin
 export {
     getAllUser, createUser, deleteUser, updateUser,
     getAllCode, getTopDoctorHomeService, getAllDoctors,
-    postDetailDoctor, getDetailDoctor
+    postDetailDoctor, getDetailDoctor,
+    updateDetailDoctor
 }

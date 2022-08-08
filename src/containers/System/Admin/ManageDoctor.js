@@ -8,6 +8,8 @@ import 'react-markdown-editor-lite/lib/index.css';
 import './ManageDoctor.scss'
 import Select from 'react-select';
 import { LANGUAGES } from '../../../utils/constant'
+import { getDetailDoctor, updateDetailDoctor } from '../../../services/userService'
+import { toast } from 'react-toastify';
 
 const options = [
     { value: 'chocolate', label: 'Chocolate' },
@@ -26,6 +28,7 @@ class ManageDoctor extends Component {
             selectedDoctor: '',
             optionDoctors: [],
             description: '',
+            isMarkdown: false
         }
     }
     async componentDidMount() {
@@ -71,7 +74,24 @@ class ManageDoctor extends Component {
             contentHTML: html
         })
     }
-    handleChange = (selectedDoctor) => {
+    handleChange = async (selectedDoctor) => {
+        let response = await getDetailDoctor(selectedDoctor.value)
+        console.log('response.data.Markdown', response.data.Markdown)
+        if (response.data.Markdown.id) {
+            this.setState({
+                contentMarkdown: response.data.Markdown?.contentMarkdown || '',
+                contentHTML: response.data.Markdown?.contentHTML || '',
+                description: response.data.Markdown?.description || '',
+                isMarkdown: true
+            })
+        } else {
+            this.setState({
+                contentMarkdown: '',
+                contentHTML: '',
+                description: '',
+                isMarkdown: false
+            })
+        }
         this.setState({
             selectedDoctor
         })
@@ -83,11 +103,16 @@ class ManageDoctor extends Component {
             description: this.state.description,
             doctorId: this.state.selectedDoctor.value
         }
-        await this.props.saveDetailDoctor(detailDoctor)
-        this.setState({
-            selectedDoctor: '',
-            description: '',
-        })
+        if (!this.state.isMarkdown) {
+            await this.props.createDetailDoctor(detailDoctor)
+        } else {
+            let res = await updateDetailDoctor(detailDoctor)
+            if (res.errCode === 0) {
+                toast.success(res.message)
+            } else {
+                toast.error(res.message)
+            }
+        }
     }
     handleOnchangeDesc = (e) => {
         this.setState({
@@ -95,7 +120,7 @@ class ManageDoctor extends Component {
         })
     }
     render() {
-        const { selectedDoctor, description, optionDoctors } = this.state;
+        const { selectedDoctor, description, optionDoctors, contentMarkdown, isMarkdown } = this.state;
         return (
             <div className='container'>
                 <div className='row'>
@@ -122,12 +147,20 @@ class ManageDoctor extends Component {
                 </div>
 
                 <MdEditor style={{ height: '450px' }}
+                    value={contentMarkdown}
                     renderHTML={text => mdParser.render(text)}
                     onChange={this.handleEditorChange}
                 />
-                <button type="button" className="btn btn-warning mt-3"
+                <button type="button"
+                    className={isMarkdown ? "btn btn-warning mt-3" : "btn btn-primary mt-3"}
                     onClick={() => this.handleSaveContentMarkdown()}
-                >Lưu thông tin</button>
+                >
+                    {isMarkdown ?
+                        <span>Lưu thông tin</span>
+                        :
+                        <span>Tạo thông tin</span>
+                    }
+                </button>
 
             </div>
         );
@@ -143,7 +176,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         fetchAllDoctors: () => dispatch(actions.fetchAllDoctors()),
-        saveDetailDoctor: (detailDoctor) => dispatch(actions.saveDetailDoctor(detailDoctor))
+        createDetailDoctor: (detailDoctor) => dispatch(actions.saveDetailDoctor(detailDoctor))
     };
 };
 

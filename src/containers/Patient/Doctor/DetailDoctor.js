@@ -18,7 +18,6 @@ class DetailDoctor extends Component {
         let doctorId = this.props?.match?.params?.id || ''
         if (doctorId) {
             let response = await getDetailDoctor(doctorId)
-            console.log(response)
             if (response.errCode === 0) {
                 this.setState({
                     doctorDetail: response?.data || {}
@@ -29,7 +28,10 @@ class DetailDoctor extends Component {
     }
     render() {
         let { doctorDetail } = this.state
-        let name = (this.props.language === LANGUAGES.VI) ? doctorDetail?.lastName + ' ' + doctorDetail?.firstName : doctorDetail?.firstName + ' ' + doctorDetail?.lastName
+        let name = (this.props.language === LANGUAGES.VI) ?
+            (doctorDetail?.positionData?.valueVi || '') + ' - ' + (doctorDetail?.lastName || '') + ' ' + (doctorDetail?.firstName || '')
+            :
+            (doctorDetail?.positionData?.valueEn || '') + ' - ' + (doctorDetail?.firstName || '') + ' ' + (doctorDetail?.lastName || '')
         return (
             <>
                 <HomeHeader
@@ -42,7 +44,7 @@ class DetailDoctor extends Component {
                                 style={{
                                     backgroundImage: `url("${doctorDetail.image}")`,
                                     backgroundPosition: 'center center',
-                                    backgroundSize: 'contain',
+                                    backgroundSize: 'cover',
                                     backgroundRepeat: 'no-repeat'
                                 }}
                             >
@@ -56,7 +58,7 @@ class DetailDoctor extends Component {
                                 </div>
                             </div>
                         </div>
-                        <div className='doctor-third mt-5'>
+                        <div className='doctor-third mt-3'>
                             <hr />
                             <span
                                 dangerouslySetInnerHTML={{ __html: `${doctorDetail?.Markdown?.contentHTML || ''}` }}
@@ -73,9 +75,8 @@ class DetailDoctor extends Component {
 
 const mapStateToProps = state => {
     return {
-        systemMenuPath: state.app.systemMenuPath,
-        isLoggedIn: state.user.isLoggedIn,
-        language: state.app.language
+        language: state.app.language,
+        topDoctorRedux: state.admin.topDoctor
     };
 };
 
