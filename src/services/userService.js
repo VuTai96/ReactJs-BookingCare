@@ -1,17 +1,11 @@
 import axios from "../axios"
 
 const handleLogin = async (username, password) => {
-    // try {
     let data = await axios.post('http://localhost:8080/api/login', {
         email: username,
         password: password
     })
-    //console.log('>>data service:', data)
     return data
-
-    // } catch (error) {
-    //     console.log(error)
-    // }
 }
 const getAllUser = (id) => {
     return axios.get(`/api/get-all-user?id=${id}`) //id = 'ALL' or value
@@ -37,9 +31,13 @@ const getAllDoctors = (type) => {
 const postDetailDoctor = (detailDoctor) => {
     return axios.post('/api/save-infor-doctor', detailDoctor)
 }
+const getDetailDoctor = (doctorId) => {
+    return axios.get(`/api/get-detail-doctor-by-id?id=${doctorId}`)
+}
+
 export default handleLogin
 export {
     getAllUser, createUser, deleteUser, updateUser,
     getAllCode, getTopDoctorHomeService, getAllDoctors,
-    postDetailDoctor
+    postDetailDoctor, getDetailDoctor
 }

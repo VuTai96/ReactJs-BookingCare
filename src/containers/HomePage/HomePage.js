@@ -14,7 +14,9 @@ class Home extends Component {
 
         return (
             <div>
-                <HomeHeader />
+                <HomeHeader
+                    showBaner={true}
+                />
                 <Specialty />
                 <MedicalFacility />
                 <OutStandingDoctor />

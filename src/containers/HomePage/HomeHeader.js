@@ -62,72 +62,74 @@ class Home extends Component {
                         </div>
                     </div>
                 </div>
-                <div className='home-header-banner'>
-                    <div className='top-banner'>
-                        <div className='text-title-top'>
-                            <FormattedMessage id="banner.medical-foundation" />
-                            {/* <FormattedMessage id="homeheader.support" /> */}
+                {this.props.showBaner &&
+                    <div className='home-header-banner'>
+                        <div className='top-banner'>
+                            <div className='text-title-top'>
+                                <FormattedMessage id="banner.medical-foundation" />
+                                {/* <FormattedMessage id="homeheader.support" /> */}
 
+                            </div>
+                            <div className='text-title-bottom' >
+                                <FormattedMessage id='banner.comprehensive-health-care' />
+                            </div>
+                            <div className='search'>
+                                <i className="fas fa-search"></i>
+                                <input placeholder={(this.props.language == LANGUAGES.VI ? 'Tìm phòng khám' : 'Find a clinic')} />
+                            </div>
                         </div>
-                        <div className='text-title-bottom' >
-                            <FormattedMessage id='banner.comprehensive-health-care' />
-                        </div>
-                        <div className='search'>
-                            <i className="fas fa-search"></i>
-                            <input placeholder={(this.props.language == LANGUAGES.VI ? 'Tìm phòng khám' : 'Find a clinic')} />
+                        <div className='bottom-banner'>
+                            <div className='options'>
+                                <i className="fas fa-hospital"></i>
+                                <div>
+                                    <FormattedMessage id='banner.c1' />
+                                </div>
+                            </div>
+                            <div className='options'>
+                                <i className="fas fa-mobile-alt"></i>
+                                <div>
+                                    <FormattedMessage id='banner.c2' />
+                                </div>
+                            </div>
+                            <div className='options'>
+                                <i className="fas fa-box"></i>
+                                <div>
+                                    <FormattedMessage id='banner.c3' />
+                                </div>
+                            </div>
+                            <div className='options'>
+                                <i className="fas fa-hospital"></i>
+                                <div>
+                                    <FormattedMessage id='banner.c4' />
+                                </div>
+                            </div>
+                            <div className='options'>
+                                <i className="fas fa-hospital"></i>
+                                <div>
+                                    <FormattedMessage id='banner.c5' />
+                                </div>
+                            </div>
+                            <div className='options'>
+                                <i className="fas fa-hospital"></i>
+                                <div>
+                                    <FormattedMessage id='banner.c6' />
+                                </div>
+                            </div>
+                            <div className='options'>
+                                <i className="fas fa-hospital"></i>
+                                <div>
+                                    <FormattedMessage id='banner.c7' />
+                                </div>
+                            </div>
+                            <div className='options'>
+                                <i className="fas fa-hospital"></i>
+                                <div>
+                                    <FormattedMessage id='banner.c8' />
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div className='bottom-banner'>
-                        <div className='options'>
-                            <i className="fas fa-hospital"></i>
-                            <div>
-                                <FormattedMessage id='banner.c1' />
-                            </div>
-                        </div>
-                        <div className='options'>
-                            <i className="fas fa-mobile-alt"></i>
-                            <div>
-                                <FormattedMessage id='banner.c2' />
-                            </div>
-                        </div>
-                        <div className='options'>
-                            <i className="fas fa-box"></i>
-                            <div>
-                                <FormattedMessage id='banner.c3' />
-                            </div>
-                        </div>
-                        <div className='options'>
-                            <i className="fas fa-hospital"></i>
-                            <div>
-                                <FormattedMessage id='banner.c4' />
-                            </div>
-                        </div>
-                        <div className='options'>
-                            <i className="fas fa-hospital"></i>
-                            <div>
-                                <FormattedMessage id='banner.c5' />
-                            </div>
-                        </div>
-                        <div className='options'>
-                            <i className="fas fa-hospital"></i>
-                            <div>
-                                <FormattedMessage id='banner.c6' />
-                            </div>
-                        </div>
-                        <div className='options'>
-                            <i className="fas fa-hospital"></i>
-                            <div>
-                                <FormattedMessage id='banner.c7' />
-                            </div>
-                        </div>
-                        <div className='options'>
-                            <i className="fas fa-hospital"></i>
-                            <div>
-                                <FormattedMessage id='banner.c8' />
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                }
             </>
         );
     }

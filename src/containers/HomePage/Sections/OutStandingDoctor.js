@@ -9,6 +9,8 @@ import "slick-carousel/slick/slick-theme.css";
 import * as actions from '../../../store/actions'
 import { LANGUAGES } from '../../../utils';
 import CommonUtils from '../../../utils/CommonUtils'
+import { withRouter } from 'react-router';
+
 
 class OutStandingDoctor extends Component {
     constructor(props) {
@@ -19,7 +21,7 @@ class OutStandingDoctor extends Component {
     }
 
     async componentDidMount() {
-        await this.props.fetchTopDoctorRedux('')
+        await this.props.fetchTopDoctorRedux()
     }
     componentDidUpdate(preProps, PreState, snapshot) {
         if (preProps.topDoctorRedux !== this.props.topDoctorRedux) {
@@ -27,6 +29,9 @@ class OutStandingDoctor extends Component {
                 arrDoctors: this.props.topDoctorRedux
             })
         }
+    }
+    handleOnclickDoctor = async (doctor) => {
+        this.props.history.push(`/home/${doctor.id}`)
     }
     render() {
         let { arrDoctors } = this.state
@@ -60,7 +65,9 @@ class OutStandingDoctor extends Component {
                                 let nameVi = `${item.positionData.valueVi} ${item.lastName} ${item.firstName}`;
                                 let nameEn = `${item.positionData.valueEn}  ${item.firstName} ${item.lastName}`;
                                 return (
-                                    <div className='image-section3' key={index} >
+                                    <div className='image-section3' key={index}
+                                        onClick={() => this.handleOnclickDoctor(item)}
+                                    >
                                         {/* style={{ backgroundImage: `url(${urlImage})` }} */}
 
 
@@ -101,4 +108,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OutStandingDoctor);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OutStandingDoctor));

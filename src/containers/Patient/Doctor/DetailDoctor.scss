@@ -1,0 +1,24 @@
+.detailDoctor-container {
+    margin-top: 20px;
+
+    .doctor-detail {
+        display: flex;
+        // gap: 3%;
+
+        .doctor-avata {
+            width        : 120px;
+            height       : 120px;
+            border-radius: 50%;
+        }
+
+        .doctor-descrition {
+            width      : 600px;
+            margin-left: 20px;
+
+            .doctor-descrition-header {
+                font-size  : 2rem;
+                font-weight: 600;
+            }
+        }
+    }
+}
