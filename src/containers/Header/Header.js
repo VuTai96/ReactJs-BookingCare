@@ -2,17 +2,39 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from "../../store/actions";
 import Navigator from '../../components/Navigator';
-import { adminMenu } from './menuApp';
+import { adminMenu, doctorMenu } from './menuApp';
 import './Header.scss';
-import { LANGUAGES } from '../../utils';
+import { LANGUAGES, USER_ROLE } from '../../utils';
 import { FormattedMessage } from 'react-intl';
 
 
 class Header extends Component {
-
+    constructor(props) {
+        super(props)
+        this.state = {
+            menu: []
+        }
+    }
+    componentDidMount() {
+        console.log('this.props.userInfo.roleId', this.props.userInfo.roleId)
+        if (this.props.userInfo.roleId === USER_ROLE.ADMIN) {
+            this.setState({
+                menu: adminMenu
+            })
+        } else if (this.props.userInfo.roleId === USER_ROLE.DOCTOR) {
+            this.setState({
+                menu: doctorMenu
+            })
+        } else {
+            this.setState({
+                menu: []
+            })
+        }
+    }
     handleChangeLanguage = (language) => {
         this.props.changLanguageReduxApp(language)
     }
+
 
     render() {
         const { processLogout, userInfo } = this.props;
@@ -21,7 +43,7 @@ class Header extends Component {
             <div className="header-container">
                 {/* thanh navigator */}
                 <div className="header-tabs-container">
-                    <Navigator menus={adminMenu} />
+                    <Navigator menus={this.state.menu} />
                 </div>
 
                 {/* nút logout */}
