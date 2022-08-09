@@ -5,26 +5,21 @@ import * as actions from '../../../store/actions'
 
 import './ManageSchedule.scss'
 import Select from 'react-select';
-import { LANGUAGES } from '../../../utils/constant'
+import { LANGUAGES, dateFormat } from '../../../utils/constant'
 import { getDetailDoctor, updateDetailDoctor } from '../../../services/userService'
 import { toast } from 'react-toastify';
 import Header from '../../../containers/Header/Header'
 import DatePicker from '../../../components/Input/DatePicker';
-
-const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' },
-];
-
+import moment from 'moment';
+import _ from 'lodash';
 
 class ManageSchedule extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            selectedDoctor: '',
+            selectedDoctor: {},
             optionDoctors: [],
-            currentDate: new Date(),
+            currentDate: '',
             rangeTime: []
         }
     }
@@ -64,28 +59,67 @@ class ManageSchedule extends Component {
             })
         }
         if (prevProps.rangeTimeRedux !== this.props.rangeTimeRedux) {
+            let data = this.props.rangeTimeRedux.map(item => ({ ...item, isSelected: false }))
             this.setState({
-                rangeTime: this.props.rangeTimeRedux
+                rangeTime: data
             })
         }
     }
     handleChange = async (selectedDoctor) => {
         let response = await getDetailDoctor(selectedDoctor.value)
-        console.log('getDetailDoctor', response)
         this.setState({
             selectedDoctor
         })
     }
     handleOnChangeDatePicker = (date) => {
-        console.log(date)
         this.setState({
             currentDate: date[0]
         })
     }
+    handleClickBtnTime = (time) => {
+        let data = this.state.rangeTime.map((item => {
+            if (item.id === time.id) {
+                item.isSelected = !item.isSelected
+            }
+            return item
+        }))
+        this.setState({
+            rangeTime: data
+        })
+    }
+    handleClickBtnSave = () => {
+        let { selectedDoctor, currentDate, rangeTime } = this.state
+        let result = []
+        if (!selectedDoctor || _.isEmpty(selectedDoctor)) {
+            toast.error('Invalid doctor!')
+            return
+        }
+        if (!currentDate) {
+            toast.error('Invalid date!')
+            return
+        }
+        let formatDate = moment(currentDate).format(dateFormat.SEND_TO_SERVER)
+        let selectedTime = rangeTime.filter(item => item.isSelected === true)
+        if (!selectedTime || _.isEmpty(selectedTime)) {
+            toast.error('Invalid selected time!')
+            return
+        }
+        selectedTime.map(item => {
+            let obj = {}
+            obj.doctorId = selectedDoctor.value
+            obj.date = formatDate
+            obj.time = item.keyMap
+            result.push(obj)
+        })
+
+        console.log('Schedule result', result)
+    }
+
     render() {
         let { selectedDoctor, optionDoctors, currentDate, rangeTime } = this.state
-        console.log(rangeTime)
         let { language } = this.props
+        let date = new Date();
+        date.setDate(date.getDate() - 1);
         return (
             <>
                 <div className='container'>
@@ -106,7 +140,7 @@ class ManageSchedule extends Component {
                             <DatePicker
                                 onChange={this.handleOnChangeDatePicker}
                                 className="form-control"
-                                minDate={new Date()}
+                                minDate={date}
                                 value={this.state.currentDate}
                             />
                         </div>
@@ -114,7 +148,12 @@ class ManageSchedule extends Component {
                     <div className='btn-range-time'>
                         {rangeTime.map((item, index) => {
                             return (
-                                <button className='btn btn-outline-secondary' >
+                                <button className={
+                                    item.isSelected ? 'btn btn-outline-secondary active' : 'btn btn-outline-secondary'
+                                }
+                                    key={index}
+                                    onClick={() => this.handleClickBtnTime(item)}
+                                >
                                     {language === LANGUAGES.VI ? item.valueVi : item.valueEn}
                                 </button>
                             )
@@ -123,7 +162,9 @@ class ManageSchedule extends Component {
                         }
                     </div>
                     <div className='col-12 mt-5'>
-                        <button className='btn btn-primary' >
+                        <button className='btn btn-primary'
+                            onClick={() => this.handleClickBtnSave()}
+                        >
                             <FormattedMessage id="doctor.save-schedule" />
                         </button>
                     </div>

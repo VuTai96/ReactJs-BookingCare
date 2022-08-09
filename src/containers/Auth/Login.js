@@ -61,8 +61,6 @@ class Login extends Component {
         //console.log(this.state)
     }
     handleKeyPress = (event) => {
-        console.log('enter press here! ')
-
         if (event.key === 'Enter') {
             this.handleLogin()
         }
