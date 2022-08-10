@@ -72,5 +72,14 @@
         "none-schedule": "No appointment yet, please choose another time!",
         "choose": "Choose",
         "book-free": "and book (free)"
+    },
+    "admin": {
+        "manage-doctor": {
+            "title": "Create more doctor information",
+            "choose-doctor": "Choose doctor:",
+            "description": "Introduction information:",
+            "add": "Create information",
+            "save": "Save information"
+        }
     }
 }

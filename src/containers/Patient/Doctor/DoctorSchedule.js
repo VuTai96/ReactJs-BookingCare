@@ -57,35 +57,33 @@ class DoctorSchedule extends Component {
         }
         return arrDate
     }
-    async componentDidMount() {
+    componentDidMount() {
         this.setState({
             allDays: this.setAllDay(this.props.language)
         })
-        let response = await getScheduleDoctorByDate(this.props.match.params.id, this.state.dateSelected)
-        if (response.errCode === 0 && response?.data?.length > 0) {
-            this.setState({
-                arrScheduleOfDay: response.data || []
-            })
-        }
-
     }
-    componentDidUpdate(prevProps, revState, snapshot) {
+    async componentDidUpdate(prevProps, revState, snapshot) {
         if (prevProps.language !== this.props.language) {
             this.setState({
                 allDays: this.setAllDay(this.props.language)
             })
         }
+        if (prevProps.doctorId !== this.props.doctorId) {
+            let response = await getScheduleDoctorByDate(this.props.doctorId, this.state.dateSelected)
+            if (response.errCode === 0 && response?.data?.length > 0) {
+                this.setState({
+                    arrScheduleOfDay: response.data || []
+                })
+            }
+        }
     }
     handleOnchange = async (e) => {
-
         this.setState({
             dateSelected: e.target.value
         })
         let response = await getScheduleDoctorByDate(this.props.match.params.id, e.target.value)
         console.log('response', response)
         if (response.errCode === 0) {
-            console.log('response', response)
-
             this.setState({
                 arrScheduleOfDay: response?.data || []
             })
@@ -95,7 +93,6 @@ class DoctorSchedule extends Component {
     render() {
         let { allDays, dateSelected, arrScheduleOfDay } = this.state
         let { language } = this.props
-        console.log(arrScheduleOfDay)
         return (
             <div className='doctor-schedule-container'>
                 <div className='select-date'>

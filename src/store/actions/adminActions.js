@@ -122,7 +122,6 @@ export const createUserFail = () => ({
     type: actionTypes.CREATE_USER_FAIL
 })
 
-
 export const fetchAllUser = () => {
     // This form is allowed by Redux Thunk middleware
     // described below in “Async Action Creators” section.
@@ -150,8 +149,6 @@ export const fetchAllUserSuccess = (resUsers) => ({
 export const fetchAllUserFail = () => ({
     type: actionTypes.FETCH_ALL_USER_FAIL
 })
-
-
 
 export const deleteAUser = (userId) => {
     // This form is allowed by Redux Thunk middleware
@@ -314,3 +311,42 @@ export const fetchScheduleTime = (Type) => {
         }
     }
 }
+
+export const fetchRequireDoctorInfor = () => {
+    return async (dispatch, getState) => {
+        //console.log(getState())
+        try {
+            dispatch({
+                type: actionTypes.FETCH_REQUIRE_DOCTOR_INFOR_START
+            })
+            let resPrice = await getAllCode('PRICE')
+            let resPayment = await getAllCode('PAYMENT')
+            let resProvince = await getAllCode('PROVINCE')
+
+            if (resPrice?.errCode === 0 &&
+                resPayment?.errCode === 0 &&
+                resProvince?.errCode === 0) {
+                let resData = {
+                    resPrice: resPrice.data,
+                    resPayment: resPayment.data,
+                    resProvince: resProvince.data,
+                }
+                dispatch(fetchRequireDoctorInforSuccess(resData))
+            } else {
+                dispatch(fetchRequireDoctorInforFail())
+            }
+        } catch (e) {
+            dispatch(fetchRequireDoctorInforFail())
+            console.log('fetchGenderStart error', e)
+        }
+    }
+}
+
+export const fetchRequireDoctorInforSuccess = (resData) => ({
+    type: actionTypes.FETCH_REQUIRE_DOCTOR_INFOR_SUCCESS,
+    data: resData
+})
+
+export const fetchRequireDoctorInforFail = () => ({
+    type: actionTypes.FETCH_REQUIRE_DOCTOR_INFOR_FAIL
+})

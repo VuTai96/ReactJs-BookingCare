@@ -29,6 +29,7 @@ class DetailDoctor extends Component {
     }
     render() {
         let { doctorDetail } = this.state
+
         let name = (this.props.language === LANGUAGES.VI) ?
             (doctorDetail?.positionData?.valueVi || '') + ' - ' + (doctorDetail?.lastName || '') + ' ' + (doctorDetail?.firstName || '')
             :
@@ -61,7 +62,9 @@ class DetailDoctor extends Component {
                         </div>
                         <div className='row doctor-schedule'>
                             <div className='col-6 content-left'>
-                                <DoctorSchedule />
+                                <DoctorSchedule
+                                    doctorId={doctorDetail.id}
+                                />
                             </div>
                             <div className='col-6 content-right'>
 
