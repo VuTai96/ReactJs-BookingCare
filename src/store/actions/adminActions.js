@@ -271,7 +271,7 @@ export const saveDetailDoctor = (detailDoctor) => {
                     type: actionTypes.SAVE_DETAIL_DOCTOR_SUCCESS,
                 })
             } else {
-                toast.success(res.message)
+                toast.error(res.message)
                 dispatch({
                     type: actionTypes.SAVE_DETAIL_DOCTOR_FAIL,
                 })
