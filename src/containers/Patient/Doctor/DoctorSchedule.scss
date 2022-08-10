@@ -1,7 +1,43 @@
 .doctor-schedule-container {
     .select-date {
         .form-select {
-            width: auto;
+            width              : auto;
+            color              : blue;
+            font-size          : 1.1rem;
+            font-weight        : 600;
+            // padding         : 2px;
+            background-color   : aliceblue;
         }
     }
+
+    .show-choosed-date {
+        margin-top: 15px;
+        display   : flex;
+        gap       : 10px;
+        flex-wrap : wrap;
+
+        .timeType-btn {
+            min-width: 150px;
+            border   : none;
+
+            &:hover {
+                background-color: rgba(36, 179, 176, 0.699);
+
+            }
+        }
+
+        .timeType-none {
+            margin   : 10px 0 0 30px;
+            font-size: 18px;
+
+        }
+    }
+
+    .schedule-title {
+        margin        : 10px 0;
+        text-transform: uppercase;
+        font-size     : 18px;
+    }
+
+
 }
