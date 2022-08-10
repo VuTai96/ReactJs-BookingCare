@@ -6,6 +6,7 @@ import HomeHeader from '../../HomePage/HomeHeader';
 import { getDetailDoctor } from '../../../services/userService';
 import './DetailDoctor.scss'
 import { LANGUAGES } from '../../../utils/constant'
+import DoctorSchedule from './DoctorSchedule';
 
 class DetailDoctor extends Component {
     constructor(props) {
@@ -56,6 +57,14 @@ class DetailDoctor extends Component {
                                 <div className='doctor-descrition-body'>
                                     {doctorDetail.Markdown?.description || ''}
                                 </div>
+                            </div>
+                        </div>
+                        <div className='row doctor-schedule'>
+                            <div className='col-6 content-left'>
+                                <DoctorSchedule />
+                            </div>
+                            <div className='col-6 content-right'>
+
                             </div>
                         </div>
                         <div className='doctor-third mt-3'>

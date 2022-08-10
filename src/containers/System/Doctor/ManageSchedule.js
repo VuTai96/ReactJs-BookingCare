@@ -6,7 +6,7 @@ import * as actions from '../../../store/actions'
 import './ManageSchedule.scss'
 import Select from 'react-select';
 import { LANGUAGES, dateFormat } from '../../../utils/constant'
-import { getDetailDoctor, updateDetailDoctor } from '../../../services/userService'
+import { getDetailDoctor, updateDetailDoctor, saveBulkCreateSchedule } from '../../../services/userService'
 import { toast } from 'react-toastify';
 import Header from '../../../containers/Header/Header'
 import DatePicker from '../../../components/Input/DatePicker';
@@ -87,9 +87,10 @@ class ManageSchedule extends Component {
             rangeTime: data
         })
     }
-    handleClickBtnSave = () => {
+    handleClickBtnSave = async () => {
         let { selectedDoctor, currentDate, rangeTime } = this.state
         let result = []
+        console.log('this.state', this.state)
         if (!selectedDoctor || _.isEmpty(selectedDoctor)) {
             toast.error('Invalid doctor!')
             return
@@ -98,7 +99,10 @@ class ManageSchedule extends Component {
             toast.error('Invalid date!')
             return
         }
-        let formatDate = moment(currentDate).format(dateFormat.SEND_TO_SERVER)
+        // let formatDate = moment(currentDate).format(dateFormat.SEND_TO_SERVER)
+        // let formatDate = moment(currentDate).unix()
+        let formatDate = (new Date(currentDate)).getTime()
+
         let selectedTime = rangeTime.filter(item => item.isSelected === true)
         if (!selectedTime || _.isEmpty(selectedTime)) {
             toast.error('Invalid selected time!')
@@ -108,13 +112,16 @@ class ManageSchedule extends Component {
             let obj = {}
             obj.doctorId = selectedDoctor.value
             obj.date = formatDate
-            obj.time = item.keyMap
+            obj.timeType = item.keyMap
             result.push(obj)
         })
-
-        console.log('Schedule result', result)
+        let res = await saveBulkCreateSchedule({ schedule: result })
+        if (res.errCode === 0) {
+            toast.success(res.message)
+        } else {
+            toast.error(res.message)
+        }
     }
-
     render() {
         let { selectedDoctor, optionDoctors, currentDate, rangeTime } = this.state
         let { language } = this.props
