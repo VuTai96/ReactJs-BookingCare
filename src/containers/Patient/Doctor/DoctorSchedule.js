@@ -6,6 +6,7 @@ import { LANGUAGES } from '../../../utils';
 import './DoctorSchedule.scss'
 import { getScheduleDoctorByDate } from '../../../services/userService'
 import { withRouter } from 'react-router-dom'
+import { FormattedMessage } from 'react-intl';
 
 
 
@@ -31,7 +32,7 @@ class DoctorSchedule extends Component {
         });
         moment.updateLocale('today', {
             weekdays: [
-                "today", "today", "today", "today", "today", "today", "today"
+                "Today", "Today", "Today", "Today", "Today", "Today", "Today"
             ]
         });
         let arrDate = []
@@ -111,21 +112,34 @@ class DoctorSchedule extends Component {
                     </select>
                 </div>
                 <div className='schedule-title'>
-                    <i class="fas fa-calendar-alt"> <span>lịch khám</span></i>
+                    <i class="fas fa-calendar-alt"> <span>
+                        <FormattedMessage id="patient.detail-doctor" />
+                    </span></i>
                 </div>
                 <div className='show-choosed-date'>
-                    {arrScheduleOfDay.length > 0 ?
-                        arrScheduleOfDay.map((item, index) => {
-                            return (
-                                <button className='btn btn-warning timeType-btn' key={index}>
-                                    {language === LANGUAGES.VI && item.timeTypeData.valueVi}
-                                    {language === LANGUAGES.EN && item.timeTypeData.valueEn}
 
-                                </button>
-                            )
-                        })
+                    {arrScheduleOfDay.length > 0 ?
+                        <>
+                            {arrScheduleOfDay.map((item, index) => {
+                                return (
+                                    <button className='btn btn-warning timeType-btn' key={index}>
+                                        {language === LANGUAGES.VI && item.timeTypeData.valueVi}
+                                        {language === LANGUAGES.EN && item.timeTypeData.valueEn}
+                                    </button>
+                                )
+                            })
+                            }
+                            <div className='note'>
+                                <FormattedMessage id='patient.choose' />
+                                <i class="fas fa-hand-point-up"></i>
+                                <FormattedMessage id='patient.book-free' />
+
+                            </div>
+                        </>
                         :
-                        <div className='timeType-none'>Chưa có lịch khám, vui lòng chọn thời gian khác</div>
+                        <div className='timeType-none'>
+                            <FormattedMessage id='patient.none-schedule' />
+                        </div>
                     }
                 </div>
             </div>

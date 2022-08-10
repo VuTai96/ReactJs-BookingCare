@@ -1,4 +1,6 @@
 .doctor-schedule-container {
+    border-right: 1px solid #ddd;
+
     .select-date {
         .form-select {
             width              : auto;
@@ -13,12 +15,22 @@
     .show-choosed-date {
         margin-top: 15px;
         display   : flex;
-        gap       : 10px;
+        gap       : 15px;
         flex-wrap : wrap;
 
+        .note {
+            width: 100%;
+
+            i {
+                margin: 0 3px;
+            }
+        }
+
         .timeType-btn {
-            min-width: 150px;
-            border   : none;
+            min-width       : 150px;
+            border          : none;
+            height          : 36px;
+            background-color: rgb(106, 225, 66);
 
             &:hover {
                 background-color: rgba(36, 179, 176, 0.699);
@@ -27,9 +39,9 @@
         }
 
         .timeType-none {
-            margin   : 10px 0 0 30px;
-            font-size: 18px;
-
+            margin    : 10px 0 0 30px;
+            font-size : 18px;
+            font-style: italic;
         }
     }
 
