@@ -143,27 +143,38 @@ class ManageDoctor extends Component {
             contentHTML: html
         })
     }
-    handleChange = async (selectedDoctor) => {
+    handleChangeDoctor = async (selectedDoctor) => {
         let response = await getDetailDoctor(selectedDoctor.value)
         // console.log('response.data.Markdown', response.data.Markdown)
-        if (response.data.Markdown.id) {
-            this.setState({
-                contentMarkdown: response.data.Markdown?.contentMarkdown || '',
-                contentHTML: response.data.Markdown?.contentHTML || '',
-                description: response.data.Markdown?.description || '',
-                isMarkdown: true
-            })
-        } else {
-            this.setState({
-                contentMarkdown: '',
-                contentHTML: '',
-                description: '',
-                isMarkdown: false
-            })
-        }
+        // if (response.data) {
+        // selectedPrice: '',
+        // selectedPayment: '',
+        // selectedProvince: '',
+        let priceId = response.data?.Doctor_Infor?.priceId || '',
+            provinceId = response.data?.Doctor_Infor?.provinceId || '',
+            paymentId = response.data?.Doctor_Infor?.paymentId || ''
+        let selectedPrice = this.state.optionPrice.find(item => item.value === priceId)
+        let selectedProvince = this.state.optionProvince.find(item => item.value === provinceId)
+        let selectedPayment = this.state.optionPayment.find(item => item.value === paymentId)
+
         this.setState({
-            selectedDoctor
+            selectedDoctor,
+            contentMarkdown: response.data?.Markdown?.contentMarkdown || '',
+            contentHTML: response.data?.Markdown?.contentHTML || '',
+            description: response.data?.Markdown?.description || '',
+            isMarkdown: response.data?.Markdown?.id ? true : false,
+            addressClinic: response.data?.Doctor_Infor?.addressClinic || '',
+            nameClinic: response.data?.Doctor_Infor?.nameClinic || '',
+            note: response.data?.Doctor_Infor?.note || '',
+            selectedPrice: selectedPrice || '',
+            selectedProvince: selectedProvince || '',
+            selectedPayment: selectedPayment || '',
         })
+        // }
+        // this.setState({
+        //     selectedDoctor
+
+        // })
     }
     handleSaveContentMarkdown = async () => {
         let detailDoctor = {
@@ -227,7 +238,7 @@ class ManageDoctor extends Component {
                         </div>
                         <Select
                             value={selectedDoctor}
-                            onChange={this.handleChange}
+                            onChange={this.handleChangeDoctor}
                             options={optionDoctors}
                             placeholder={<FormattedMessage id="admin.manage-doctor.choose-doctor" />}
                         />
