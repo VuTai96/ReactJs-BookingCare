@@ -85,7 +85,12 @@
             "province": "Tình thành",
             "nameClinic": "Tên phòng khám",
             "addressClinic": "Địa chỉ phòng khám",
-            "note": "Ghi chú"
+            "note": "Ghi chú",
+            "examination-address": "Địa chỉ khám: ",
+            "examination-price": "Giá khám: ",
+            "payment-comment": "Người bệnh có thể thanh toán bằng hình thức: ",
+            "see-details": "Xem chi tiết",
+            "hide-details": "Ẩn bảng giá"
         }
     }
 }

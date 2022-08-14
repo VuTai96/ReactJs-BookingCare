@@ -85,7 +85,12 @@
             "province": "Province",
             "nameClinic": "Clinic's name",
             "addressClinic": "Clinic's address",
-            "note": "Note"
+            "note": "Note",
+            "examination-address": "Examination address:",
+            "examination-price": "Examination price:",
+            "payment-comment": "Patients can pay in the form of: ",
+            "see-details": "See details",
+            "hide-details": "Hide price list"
         }
     }
 }

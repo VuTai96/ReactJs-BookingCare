@@ -68,7 +68,9 @@ class DetailDoctor extends Component {
                                 />
                             </div>
                             <div className='col-6 content-right'>
-                                <DoctorInforExtra />
+                                <DoctorInforExtra
+                                    doctorId={doctorDetail.id}
+                                />
                             </div>
                         </div>
                         <div className='doctor-third mt-3'>
