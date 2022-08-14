@@ -1,1 +1,64 @@
-.doctor-inforExtra-container {}
+.doctor-inforExtra-container {
+    .title-address-clinic {
+        margin-bottom: 3px;
+
+        text-transform: uppercase;
+    }
+
+    .nameClinic,
+    .address-clinic {
+        font-weight: 600;
+    }
+
+    .examination-price-show {
+        .title-examination-price {
+            margin-top    : 5px;
+            text-transform: uppercase;
+        }
+
+        .table-price {
+            border    : 1px solid rgb(197, 195, 195);
+            margin-top: 3px;
+
+
+            .line-price {
+                display         : flex;
+                justify-content : space-between;
+                background-color: beige;
+                padding         : 3px;
+            }
+
+            .line-note {
+                background-color: beige;
+                padding         : 3px;
+
+            }
+
+            .line-payment {
+                padding         : 3px;
+                background-color: rgb(223, 220, 220);
+
+            }
+        }
+
+
+
+
+    }
+
+    .examination-price-hide {
+        .title-examination-price {
+            text-transform: uppercase;
+        }
+
+        .price {
+            margin-left: 3px;
+        }
+    }
+
+    .btn-showhide {
+        padding: 4px;
+        color  : rgb(20, 30, 222);
+    }
+
+}
