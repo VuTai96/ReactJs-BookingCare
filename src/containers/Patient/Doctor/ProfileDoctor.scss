@@ -1,0 +1,27 @@
+.doctor-profile-container {
+    .infor {
+        .doctor-avata1 {
+            float        : left;
+            width        : 90px;
+            height       : 90px;
+            border-radius: 50%;
+        }
+
+        .description {
+            margin-left: 110px;
+            text-align : justify;
+            padding-top: 5px;
+
+            .name-position {
+                font-weight: 600;
+                font-size  : 1.5rem;
+            }
+        }
+
+        &::after {
+            content: "";
+            clear  : both;
+            display: table;
+        }
+    }
+}

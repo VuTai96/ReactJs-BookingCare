@@ -4,22 +4,35 @@ import { connect } from "react-redux";
 import './BookingModal.scss'
 import { LANGUAGES } from '../../../../utils/constant'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-
+import ProfileDoctor from '../ProfileDoctor';
 
 class BookingModal extends Component {
     constructor(props) {
         super(props)
         this.state = {
-
+            timeScheduledetail: {}
         }
     }
     async componentDidMount() {
-
+        this.setState({
+            timeScheduledetail: this.props.timeScheduledetail || {}
+        })
 
     }
+    async componentDidUpdate(prevProps, revState, snapshot) {
+        if (prevProps.language !== this.props.language) {
+
+        }
+        if (prevProps.timeScheduledetail !== this.props.timeScheduledetail) {
+            this.setState({
+                timeScheduledetail: this.props.timeScheduledetail
+            })
+        }
+    }
     render() {
-        let { isShowBookingModal, closeModal, timeScheduledetail } = this.props
-        console.log('timeScheduledetail', timeScheduledetail)
+        let { isShowBookingModal, closeModal } = this.props
+        let { timeScheduledetail } = this.state
+
         return (
             <>
                 <Modal isOpen={isShowBookingModal} className={''}
@@ -38,10 +51,11 @@ class BookingModal extends Component {
                             </div>
                         </div>
                         <div className='body' >
-                            <div className='price'>
-                                Giá khám: 500.000VND
+                            <div className='profile-doctor'>
+                                <ProfileDoctor
+                                    timeScheduledetail={timeScheduledetail}
+                                />
                             </div>
-
                             <form>
                                 <div className='row'>
                                     <div className=" col-6 form-group">
