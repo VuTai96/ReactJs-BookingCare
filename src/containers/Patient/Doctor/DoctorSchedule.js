@@ -7,6 +7,7 @@ import './DoctorSchedule.scss'
 import { getScheduleDoctorByDate } from '../../../services/userService'
 import { withRouter } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl';
+import BookingModal from './Modal/BookingModal';
 
 
 
@@ -16,7 +17,9 @@ class DoctorSchedule extends Component {
         this.state = {
             allDays: [],
             dateSelected: moment().startOf('day').valueOf(),
-            arrScheduleOfDay: []
+            arrScheduleOfDay: [],
+            isShowBookingModal: false,
+            timeScheduledetail: {}
         }
     }
     setAllDay = (lang) => {
@@ -89,57 +92,78 @@ class DoctorSchedule extends Component {
             })
         }
     }
-
+    handleClickTime = (time) => {
+        this.setState({
+            isShowBookingModal: true,
+            timeScheduledetail: time
+        })
+    }
+    closeModal = () => {
+        this.setState({
+            isShowBookingModal: false
+        })
+    }
     render() {
-        let { allDays, dateSelected, arrScheduleOfDay } = this.state
+        let { allDays, dateSelected, arrScheduleOfDay,
+            isShowBookingModal } = this.state
         let { language } = this.props
+        // toggle={''}
         return (
-            <div className='doctor-schedule-container'>
-                <div className='select-date'>
-                    <select className="form-select" aria-label="Default select example"
-                        onChange={(e) => this.handleOnchange(e)}
-                    >
-                        {allDays.map((item, index) => {
-                            return (
-                                <option value={item.value} key={index}>
-                                    {item.label}
-                                </option>
-                            )
-                        })}
-                    </select>
-                </div>
-                <div className='schedule-title'>
-                    <i class="fas fa-calendar-alt"> <span>
-                        <FormattedMessage id="patient.detail-doctor" />
-                    </span></i>
-                </div>
-                <div className='show-choosed-date'>
-
-                    {arrScheduleOfDay.length > 0 ?
-                        <>
-                            {arrScheduleOfDay.map((item, index) => {
+            <>
+                <div className='doctor-schedule-container'>
+                    <div className='select-date'>
+                        <select className="form-select" aria-label="Default select example"
+                            onChange={(e) => this.handleOnchange(e)}
+                        >
+                            {allDays.map((item, index) => {
                                 return (
-                                    <button className='btn btn-warning timeType-btn' key={index}>
-                                        {language === LANGUAGES.VI && item.timeTypeData.valueVi}
-                                        {language === LANGUAGES.EN && item.timeTypeData.valueEn}
-                                    </button>
+                                    <option value={item.value} key={index}>
+                                        {item.label}
+                                    </option>
                                 )
-                            })
-                            }
-                            <div className='note'>
-                                <FormattedMessage id='patient.choose' />
-                                <i class="fas fa-hand-point-up"></i>
-                                <FormattedMessage id='patient.book-free' />
+                            })}
+                        </select>
+                    </div>
+                    <div className='schedule-title'>
+                        <i class="fas fa-calendar-alt"> <span>
+                            <FormattedMessage id="patient.detail-doctor" />
+                        </span></i>
+                    </div>
+                    <div className='show-choosed-date'>
 
+                        {arrScheduleOfDay.length > 0 ?
+                            <>
+                                {arrScheduleOfDay.map((item, index) => {
+                                    return (
+                                        <button className='btn btn-warning timeType-btn' key={index}
+                                            onClick={() => this.handleClickTime(item)}
+                                        >
+                                            {language === LANGUAGES.VI && item.timeTypeData.valueVi}
+                                            {language === LANGUAGES.EN && item.timeTypeData.valueEn}
+                                        </button>
+                                    )
+                                })
+                                }
+                                <div className='note'>
+                                    <FormattedMessage id='patient.choose' />
+                                    <i class="fas fa-hand-point-up"></i>
+                                    <FormattedMessage id='patient.book-free' />
+
+                                </div>
+                            </>
+                            :
+                            <div className='timeType-none'>
+                                <FormattedMessage id='patient.none-schedule' />
                             </div>
-                        </>
-                        :
-                        <div className='timeType-none'>
-                            <FormattedMessage id='patient.none-schedule' />
-                        </div>
-                    }
+                        }
+                    </div>
                 </div>
-            </div>
+                <BookingModal
+                    isShowBookingModal={this.state.isShowBookingModal}
+                    closeModal={this.closeModal}
+                    timeScheduledetail={this.state.timeScheduledetail}
+                />
+            </>
         );
     }
 }
