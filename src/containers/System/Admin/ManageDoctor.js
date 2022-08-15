@@ -214,7 +214,6 @@ class ManageDoctor extends Component {
         let stateSelect = name.name
         let copyState = { ...this.state }
         copyState[stateSelect] = selectedOption
-        console.log(copyState)
         this.setState({
             ...copyState
         })
@@ -225,7 +224,6 @@ class ManageDoctor extends Component {
             optionPrice, optionPayment, optionProvince,
             selectedPrice, selectedPayment, selectedProvince,
             nameClinic, addressClinic, note } = this.state;
-        console.log('this.state', this.state)
         return (
             <div className='container'>
                 <div className='row mb-5'>

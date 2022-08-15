@@ -71,7 +71,17 @@
         "detail-doctor": "schedule",
         "none-schedule": "No appointment yet, please choose another time!",
         "choose": "Choose",
-        "book-free": "and book (free)"
+        "book-free": "and book (free)",
+        "booking-modal": {
+            "title-booking-modal": "Information to book a medical appointment",
+            "full-name": "Full name",
+            "phone-number": "Phone number",
+            "email": "Email",
+            "address": "Address",
+            "reason": "Medical examination reason",
+            "date-of-birth": "Date of birth",
+            "gender": "Gender"
+        }
     },
     "admin": {
         "manage-doctor": {

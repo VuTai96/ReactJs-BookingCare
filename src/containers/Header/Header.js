@@ -16,7 +16,6 @@ class Header extends Component {
         }
     }
     componentDidMount() {
-        console.log('this.props.userInfo.roleId', this.props.userInfo.roleId)
         if (this.props.userInfo.roleId === USER_ROLE.ADMIN) {
             this.setState({
                 menu: adminMenu

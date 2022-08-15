@@ -71,7 +71,17 @@
         "detail-doctor": "lịch khám",
         "none-schedule": "Chưa có lịch khám, vui lòng chọn thời gian khác!",
         "choose": "chọn",
-        "book-free": "và đặt (miễn phí)"
+        "book-free": "và đặt (miễn phí)",
+        "booking-modal": {
+            "title-booking-modal": "Thông tin đặt lịch khám bệnh",
+            "full-name": "Họ và tên",
+            "phone-number": "Số điện thoại",
+            "email": "Email",
+            "address": "Địa chỉ liên hệ",
+            "reason": "Lý do khám bện",
+            "date-of-birth": "Ngày sinh",
+            "gender": "Giới tính"
+        }
     },
     "admin": {
         "manage-doctor": {

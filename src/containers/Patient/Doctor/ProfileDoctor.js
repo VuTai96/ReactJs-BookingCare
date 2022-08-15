@@ -7,6 +7,8 @@ import _ from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import NumberFormat from 'react-number-format';
 import { LANGUAGES } from '../../../utils';
+import moment from 'moment';
+// import localization from 'moment/locale/vi'
 
 
 class BookingModal extends Component {
@@ -46,10 +48,35 @@ class BookingModal extends Component {
             })
         }
     }
+    renderScheduleTime = (timeType) => {
+        moment.updateLocale('vi', {
+            weekdays: [
+                "Chủ nhật", "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7"
+            ]
+        });
+        if (!_.isEmpty(timeType)) {
+            let { language } = this.props
+
+            let date = language === LANGUAGES.VI ?
+                timeType?.timeTypeData?.valueVi + ' - ' + moment.unix(timeType?.date / 1000).local('vi').format('dddd - DD/MM/YYYY')
+                :
+                timeType?.timeTypeData?.valueEn + ' - ' + moment.unix(timeType?.date / 1000).format('ddd - MM/DD/YYYY')
+
+            return (
+                <>
+                    <div>
+                        {date}
+                    </div>
+                    <div>
+                        Miễn phí đặt lịch
+                    </div>
+                </>
+            )
+        }
+    }
     render() {
         let { timeScheduledetail, profileDoctor } = this.state
-        let { language } = this.props
-
+        let { language, isShowProfileDescription } = this.props
         return (
             <div className='doctor-profile-container'>
                 <div className='infor'>
@@ -68,9 +95,15 @@ class BookingModal extends Component {
                             {language === LANGUAGES.EN && profileDoctor.positionData?.valueEn + ', ' + profileDoctor.firstName + ' ' + profileDoctor.lastName}
 
                         </div>
-                        <div>
-                            {profileDoctor.Markdown?.description}
-                        </div>
+                        {isShowProfileDescription ?
+                            <div>
+                                {profileDoctor.Markdown?.description}
+                            </div>
+                            :
+                            <>
+                                {this.renderScheduleTime(timeScheduledetail)}
+                            </>
+                        }
                     </div>
 
                 </div>

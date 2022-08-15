@@ -126,7 +126,6 @@ class UserRedux extends Component {
     }
     editUserforprops = (user) => {
         let deco = '';
-        console.log('check dt', user.image)
         if (user.image) {
             deco = CommonUtils.Base64ToImage(user.image)
         }

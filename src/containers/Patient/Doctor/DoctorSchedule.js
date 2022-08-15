@@ -11,6 +11,7 @@ import BookingModal from './Modal/BookingModal';
 
 
 
+
 class DoctorSchedule extends Component {
     constructor(props) {
         super(props)
@@ -85,7 +86,6 @@ class DoctorSchedule extends Component {
             dateSelected: e.target.value
         })
         let response = await getScheduleDoctorByDate(this.props.match.params.id, e.target.value)
-        console.log('response', response)
         if (response.errCode === 0) {
             this.setState({
                 arrScheduleOfDay: response?.data || []
@@ -125,7 +125,7 @@ class DoctorSchedule extends Component {
                         </select>
                     </div>
                     <div className='schedule-title'>
-                        <i class="fas fa-calendar-alt"> <span>
+                        <i className="fas fa-calendar-alt"> <span>
                             <FormattedMessage id="patient.detail-doctor" />
                         </span></i>
                     </div>
@@ -146,7 +146,7 @@ class DoctorSchedule extends Component {
                                 }
                                 <div className='note'>
                                     <FormattedMessage id='patient.choose' />
-                                    <i class="fas fa-hand-point-up"></i>
+                                    <i className="fas fa-hand-point-up"></i>
                                     <FormattedMessage id='patient.book-free' />
 
                                 </div>

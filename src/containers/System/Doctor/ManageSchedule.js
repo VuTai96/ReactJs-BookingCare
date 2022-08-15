@@ -90,7 +90,6 @@ class ManageSchedule extends Component {
     handleClickBtnSave = async () => {
         let { selectedDoctor, currentDate, rangeTime } = this.state
         let result = []
-        console.log('this.state', this.state)
         if (!selectedDoctor || _.isEmpty(selectedDoctor)) {
             toast.error('Invalid doctor!')
             return
