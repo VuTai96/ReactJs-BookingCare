@@ -4,7 +4,9 @@ export const path = {
     LOGIN: '/login',
     LOG_OUT: '/logout',
     SYSTEM: '/system',
-    DETAIL_DOCTOR: '/home/:id'
+    DETAIL_DOCTOR: '/home/:id',
+    VERIFY_EMAIL_BOOKING: '/verify-booking'
+
 };
 
 export const LANGUAGES = {
