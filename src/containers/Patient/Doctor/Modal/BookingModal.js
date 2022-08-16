@@ -11,6 +11,8 @@ import Select from 'react-select';
 import { postPatientBookAppointment } from '../../../../services/userService';
 import { toast } from 'react-toastify';
 import { FormattedMessage } from 'react-intl';
+import moment from 'moment';
+import _ from 'lodash';
 
 class BookingModal extends Component {
     constructor(props) {
@@ -99,8 +101,47 @@ class BookingModal extends Component {
     handleChangeSelect = (selectedGender) => {
         this.setState({ selectedGender })
     };
+    renderScheduleTime = (timeType) => {
+        moment.updateLocale('vi', {
+            weekdays: [
+                "Chủ nhật", "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7"
+            ]
+        });
+        if (!_.isEmpty(timeType)) {
+            let { language } = this.props
+
+            let date = language === LANGUAGES.VI ?
+                timeType?.timeTypeData?.valueVi + ' - ' + moment.unix(timeType?.date / 1000).local('vi').format('dddd - DD/MM/YYYY')
+                :
+                timeType?.timeTypeData?.valueEn + ' - ' + moment.unix(timeType?.date / 1000).format('ddd - MM/DD/YYYY')
+
+            return date
+        } else {
+            return ''
+        }
+    }
+    renderDoctorName = (timeType) => {
+        moment.updateLocale('vi', {
+            weekdays: [
+                "Chủ nhật", "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7"
+            ]
+        });
+        if (!_.isEmpty(timeType)) {
+            let { language } = this.props
+
+            let name = language === LANGUAGES.VI ?
+                `${timeType.dataDoctor.lastName} ${timeType.dataDoctor.firstName}`
+                :
+                `${timeType.dataDoctor.firstName} ${timeType.dataDoctor.lastName}`
+            return name
+        } else {
+            return ''
+        }
+    }
     handleClickSave = async () => {
         let dateToSend = (new Date(this.state.birthday)).getTime()
+        let timeString = this.renderScheduleTime(this.state.timeScheduledetail)
+        let doctorName = this.renderDoctorName(this.state.timeScheduledetail)
         let data = {
             fullName: this.state.fullName,
             phoneNumber: this.state.phoneNumber,
@@ -110,7 +151,10 @@ class BookingModal extends Component {
             date: dateToSend,
             doctorId: this.state.doctorId,
             selectedGender: this.state.selectedGender?.value,
-            timeType: this.state.timeScheduledetail.timeType
+            timeType: this.state.timeScheduledetail.timeType,
+            timeString: timeString,
+            language: this.props.language,
+            doctorName: doctorName
         }
         let response = await postPatientBookAppointment(data)
         if (response?.errCode === 0) {
@@ -129,6 +173,7 @@ class BookingModal extends Component {
             toast.error(response?.errMessage)
         }
     }
+
     handleClickCancel = () => {
         this.setState({
             fullName: '',
@@ -141,6 +186,7 @@ class BookingModal extends Component {
         })
         this.props.closeModal()
     }
+
     render() {
         let { isShowBookingModal, closeModal } = this.props
         let { timeScheduledetail } = this.state
