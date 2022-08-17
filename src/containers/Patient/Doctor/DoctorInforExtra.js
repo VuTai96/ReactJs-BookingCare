@@ -60,9 +60,6 @@ class DoctorSchedule extends Component {
                 </div>
                 {isShowPrice ?
                     <div className='examination-price-show'>
-                        <div className='title-examination-price'>
-                            <FormattedMessage id="admin.manage-doctor.examination-price" />
-                        </div>
                         <div className='table-price'>
                             <div className='line-price'>
                                 <div>

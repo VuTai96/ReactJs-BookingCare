@@ -16,7 +16,8 @@ class BookingModal extends Component {
         super(props)
         this.state = {
             timeScheduledetail: {},
-            profileDoctor: {}
+            profileDoctor: {},
+            doctorId: ''
         }
     }
     getProfileDoctor = async (doctorId) => {
@@ -29,10 +30,11 @@ class BookingModal extends Component {
         }
     }
     async componentDidMount() {
-        let profileDoctor = await this.getProfileDoctor(this.props.timeScheduledetail.doctorId)
+        let profileDoctor = await this.getProfileDoctor(this.props.doctorId)
         this.setState({
             timeScheduledetail: this.props.timeScheduledetail || {},
-            profileDoctor: profileDoctor
+            profileDoctor: profileDoctor,
+            doctorId: this.props.doctorId
         })
 
     }
@@ -41,10 +43,11 @@ class BookingModal extends Component {
 
         }
         if (prevProps.timeScheduledetail !== this.props.timeScheduledetail) {
-            let profileDoctor = await this.getProfileDoctor(this.props.timeScheduledetail.doctorId)
+            let profileDoctor = await this.getProfileDoctor(this.props.doctorId)
             this.setState({
                 timeScheduledetail: this.props.timeScheduledetail,
-                profileDoctor: profileDoctor
+                profileDoctor: profileDoctor,
+                doctorId: this.props.doctorId
             })
         }
     }

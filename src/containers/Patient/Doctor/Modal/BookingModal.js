@@ -213,6 +213,7 @@ class BookingModal extends Component {
                                 <ProfileDoctor
                                     timeScheduledetail={timeScheduledetail}
                                     isShowProfileDescription={false}
+                                    doctorId={timeScheduledetail.doctorId}
                                 />
                             </div>
                             <form>
