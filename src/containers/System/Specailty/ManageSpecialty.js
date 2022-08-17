@@ -5,7 +5,7 @@ import MarkdownIt from 'markdown-it';
 import MdEditor from 'react-markdown-editor-lite';
 import { CommonUtils } from '../../../utils';
 import { toast } from 'react-toastify';
-import { postCreateSpecialty, getAllSpecialty } from '../../../services/userService'
+import { postCreateSpecialty } from '../../../services/userService'
 // import 'react-markdown-editor-lite/lib/index.css'
 
 const mdParser = new MarkdownIt(/* Markdown-it options */);
@@ -18,18 +18,9 @@ class ManageSpecialty extends Component {
             imageBase64: '',
             descriptionHTML: '',
             descriptionMarkdown: '',
-            dataSpecialty: []
         }
     }
     async componentDidMount() {
-        let response = await getAllSpecialty()
-        if (response.errCode === 0) {
-            this.setState({
-                dataSpecialty: response.data || []
-            })
-        } else {
-            toast.error(response.errMessage)
-        }
     }
     async componentDidUpdate(prevProps, revState, snapshot) {
         if (prevProps.language !== this.props.language) {

@@ -82,11 +82,18 @@ $myWidthimage  : 300px;
                 margin: 0 auto !important;
 
                 .div-image {
-                    background     : url(../../../assets/sectionsImage/thankinh.jpg) center center no-repeat;
+                    // background     : url(../../../assets/sectionsImage/thankinh.jpg) center center no-repeat;
                     height         : $myHeightimage;
                     width          : $myWidthimage;
                     background-size: cover;
+                }
 
+                h5 {
+                    padding-top: 15px;
+
+                    &:hover {
+                        color: rgb(22, 187, 187);
+                    }
                 }
 
                 &:hover {

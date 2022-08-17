@@ -59,7 +59,8 @@
     },
     "homepage": {
         "top-doctor": "Last week's featured doctor",
-        "more-infor": "More infor"
+        "more-infor": "More infor",
+        "popular-specialty": "Popular specialty"
     },
     "doctor": {
         "manage-schedule": "Manage Doctor's Examination Plan",
@@ -100,7 +101,9 @@
             "examination-price": "Examination price:",
             "payment-comment": "Patients can pay in the form of: ",
             "see-details": "See details",
-            "hide-details": "Hide price list"
+            "hide-details": "Hide price list",
+            "specialty": "Specialty",
+            "clinic": "Clinic"
         }
     }
 }

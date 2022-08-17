@@ -1,7 +1,7 @@
 import actionTypes from './actionTypes';
 import {
     getAllCode, createUser, getAllUser, deleteUser, updateUser,
-    getTopDoctorHomeService, getAllDoctors, postDetailDoctor
+    getTopDoctorHomeService, getAllDoctors, postDetailDoctor, getAllSpecialty
 } from '../../services/userService'
 import { toast } from "react-toastify"
 
@@ -322,14 +322,17 @@ export const fetchRequireDoctorInfor = () => {
             let resPrice = await getAllCode('PRICE')
             let resPayment = await getAllCode('PAYMENT')
             let resProvince = await getAllCode('PROVINCE')
+            let resSpecialty = await getAllSpecialty()
 
             if (resPrice?.errCode === 0 &&
                 resPayment?.errCode === 0 &&
-                resProvince?.errCode === 0) {
+                resProvince?.errCode === 0 &&
+                resSpecialty?.errCode === 0) {
                 let resData = {
                     resPrice: resPrice.data,
                     resPayment: resPayment.data,
                     resProvince: resProvince.data,
+                    resSpecialty: resSpecialty.data
                 }
                 dispatch(fetchRequireDoctorInforSuccess(resData))
             } else {

@@ -31,7 +31,7 @@ class OutStandingDoctor extends Component {
         }
     }
     handleOnclickDoctor = async (doctor) => {
-        this.props.history.push(`/home/${doctor.id}`)
+        this.props.history.push(`/detail-doctor/${doctor.id}`)
     }
     render() {
         let { arrDoctors } = this.state

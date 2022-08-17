@@ -8,6 +8,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { getAllSpecialty } from '../../../services/userService';
 import { toast } from 'react-toastify';
+import { withRouter } from 'react-router';
 
 
 
@@ -29,6 +30,11 @@ class Specailty extends Component {
             toast.error(response.errMessage)
         }
     }
+
+    handleOnclickSpecialty = async (specialty) => {
+        this.props.history.push(`/detail-specialty/${specialty.id}`)
+    }
+
     render() {
         console.log(this.state.dataSpecialty)
         let settings = {
@@ -46,14 +52,16 @@ class Specailty extends Component {
             <div className='homepage-section first'>
                 <div className='section-content'>
                     <div className='section-header'>
-                        <h2>Chuyên khoa phổ biến</h2>
-                        <button>Xem thêm</button>
+                        <h2><FormattedMessage id="homepage.popular-specialty" /></h2>
+                        <button><FormattedMessage id="homepage.more-infor" /></button>
                     </div>
                     <div className='section-body'>
                         <Slider {...settings}>
                             {this.state.dataSpecialty.map((item, index) => {
                                 return (
-                                    <div className='image-section'>
+                                    <div className='image-section'
+                                        onClick={() => this.handleOnclickSpecialty(item)}
+                                    >
                                         <div
                                             key={index}
                                             className='div-image'
@@ -70,9 +78,6 @@ class Specailty extends Component {
                             })
 
                             }
-
-
-
                         </Slider>
                     </div>
                 </div>
@@ -95,4 +100,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Specailty);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Specailty));

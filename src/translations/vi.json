@@ -3,7 +3,7 @@
         "specialty": "Chuyên khoa",
         "finddoctorspecialty": "Tìm bác sĩ theo chuyên khoa",
         "Health-facility": "Cơ sở y tế",
-        "Choose-hospital-clinic": "Chọn bện viện phòng khám",
+        "Choose-hospital-clinic": "Chọn bệnh viện phòng khám",
         "doctor": "Bác sĩ",
         "choose-a-good-doctor": "Chọn bác sỹ giỏi",
         "examination-package": "Gói khám",
@@ -59,7 +59,8 @@
     },
     "homepage": {
         "top-doctor": "Bác sĩ nổi bật tuần qua",
-        "more-infor": "Xem thêm"
+        "more-infor": "Xem thêm",
+        "popular-specialty": "Chuyên khoa phổ biến"
     },
     "doctor": {
         "manage-schedule": "quản lý Kế hoạch khám bệnh của bác sĩ",
@@ -100,7 +101,9 @@
             "examination-price": "Giá khám: ",
             "payment-comment": "Người bệnh có thể thanh toán bằng hình thức: ",
             "see-details": "Xem chi tiết",
-            "hide-details": "Ẩn bảng giá"
+            "hide-details": "Ẩn bảng giá",
+            "specialty": "Chuyên khoa",
+            "clinic": "Phòng khám"
         }
     }
 }
