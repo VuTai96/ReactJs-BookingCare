@@ -5,7 +5,7 @@ import MarkdownIt from 'markdown-it';
 import MdEditor from 'react-markdown-editor-lite';
 import { CommonUtils } from '../../../utils';
 import { toast } from 'react-toastify';
-import { postCreateSpecialty } from '../../../services/userService'
+import { postCreateSpecialty, getAllSpecialty } from '../../../services/userService'
 // import 'react-markdown-editor-lite/lib/index.css'
 
 const mdParser = new MarkdownIt(/* Markdown-it options */);
@@ -18,9 +18,18 @@ class ManageSpecialty extends Component {
             imageBase64: '',
             descriptionHTML: '',
             descriptionMarkdown: '',
+            dataSpecialty: []
         }
     }
     async componentDidMount() {
+        let response = await getAllSpecialty()
+        if (response.errCode === 0) {
+            this.setState({
+                dataSpecialty: response.data || []
+            })
+        } else {
+            toast.error(response.errMessage)
+        }
     }
     async componentDidUpdate(prevProps, revState, snapshot) {
         if (prevProps.language !== this.props.language) {
@@ -50,10 +59,19 @@ class ManageSpecialty extends Component {
     }
     handleOnclickSave = async () => {
         let response = await postCreateSpecialty({
-            ...this.state
+            name: this.state.name,
+            imageBase64: this.state.imageBase64,
+            descriptionHTML: this.state.descriptionHTML,
+            descriptionMarkdown: this.state.descriptionMarkdown
         })
         if (response.errCode === 0) {
             toast.success(response.errMessage)
+            this.setState({
+                name: '',
+                imageBase64: '',
+                descriptionHTML: '',
+                descriptionMarkdown: '',
+            })
         } else {
             toast.error(response.errMessage)
         }

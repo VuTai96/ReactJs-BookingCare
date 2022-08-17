@@ -60,6 +60,9 @@ const postVerifyBookAppointment = (data) => {
 const postCreateSpecialty = (data) => {
     return axios.post(`/api/creat-new-specialty`, data)
 }
+const getAllSpecialty = (data) => {
+    return axios.get(`/api/get-all-specialty`)
+}
 
 export default handleLogin
 export {
@@ -69,6 +72,7 @@ export {
     updateDetailDoctor, saveBulkCreateSchedule,
     getScheduleDoctorByDate, getExtraInforDoctorById,
     getProfileDoctorById, postPatientBookAppointment,
-    postVerifyBookAppointment, postCreateSpecialty
+    postVerifyBookAppointment, postCreateSpecialty,
+    getAllSpecialty
 
 }

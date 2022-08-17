@@ -6,37 +6,31 @@ import { SampleNextArrow, SamplePrevArrow } from './PreNextArrow'
 import './Sections.scss'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { getAllSpecialty } from '../../../services/userService';
+import { toast } from 'react-toastify';
 
-// function SampleNextArrow(props) {
-//     const { className, style, onClick } = props;
-//     return (
-//         <div
-//             className='nextstyle'
-//             // style={{ ...style, display: "block", background: "red" }}
-//             onClick={onClick}
-//         >
-//             <i class="fas fa-chevron-right"></i>
-//         </div>
-//     );
-// }
 
-// function SamplePrevArrow(props) {
-//     const { className, style, onClick } = props;
-//     return (
-//         <div
-//             className='prestyle'
-//             // style={{
-//             //     ...style, display: "inline-block", background: "green"
-//             // }}
-//             onClick={onClick}
-//         >
-//             <i class="fas fa-chevron-left"></i>
-//         </div>
-//     );
-// }
+
 class Specailty extends Component {
-    render() {
+    constructor(props) {
+        super(props)
+        this.state = {
+            dataSpecialty: []
+        }
+    }
 
+    async componentDidMount() {
+        let response = await getAllSpecialty()
+        if (response.errCode === 0) {
+            this.setState({
+                dataSpecialty: response.data || []
+            })
+        } else {
+            toast.error(response.errMessage)
+        }
+    }
+    render() {
+        console.log(this.state.dataSpecialty)
         let settings = {
             dots: false,
             infinite: true,
@@ -46,6 +40,8 @@ class Specailty extends Component {
             nextArrow: <SampleNextArrow />,
             prevArrow: <SamplePrevArrow />
         };
+
+
         return (
             <div className='homepage-section first'>
                 <div className='section-content'>
@@ -55,30 +51,28 @@ class Specailty extends Component {
                     </div>
                     <div className='section-body'>
                         <Slider {...settings}>
-                            <div className='image-section'>
-                                <div className='div-image'>                                </div>
-                                <h5>Khám thần kinh</h5>
-                            </div>
-                            <div className='image-section'>
-                                <div className='div-image'>                                </div>
-                                <h5>Khám thần kinh</h5>
-                            </div>
-                            <div className='image-section'>
-                                <div className='div-image'>                                </div>
-                                <h5>Khám thần kinh</h5>
-                            </div>
-                            <div className='image-section'>
-                                <div className='div-image'>                                </div>
-                                <h5>Khám thần kinh</h5>
-                            </div>
-                            <div className='image-section'>
-                                <div className='div-image'>                                </div>
-                                <h5>Khám thần kinh</h5>
-                            </div>
-                            <div className='image-section'>
-                                <div className='div-image'>                                </div>
-                                <h5>Khám thần kinh</h5>
-                            </div>
+                            {this.state.dataSpecialty.map((item, index) => {
+                                return (
+                                    <div className='image-section'>
+                                        <div
+                                            key={index}
+                                            className='div-image'
+                                            style={{
+                                                backgroundImage: `url("${item.image}")`,
+                                                backgroundPosition: 'center',
+                                                backgroundSize: 'cover',
+                                                backgroundRepeat: 'no-repeat'
+                                            }}
+                                        ></div>
+                                        <h5>{item.name}</h5>
+                                    </div>
+                                )
+                            })
+
+                            }
+
+
+
                         </Slider>
                     </div>
                 </div>
