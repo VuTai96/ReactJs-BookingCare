@@ -15,7 +15,6 @@ const initialState = {
 const adminReducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.FETCH_GENDER_START:
-            console.log('Fetch gender is get data ...', action)
             return {
                 ...state,
                 isLoadingGender: true

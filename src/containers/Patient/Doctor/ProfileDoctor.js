@@ -8,6 +8,7 @@ import { FormattedMessage } from 'react-intl';
 import NumberFormat from 'react-number-format';
 import { LANGUAGES } from '../../../utils';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
 // import localization from 'moment/locale/vi'
 
 
@@ -79,7 +80,7 @@ class BookingModal extends Component {
     }
     render() {
         let { timeScheduledetail, profileDoctor } = this.state
-        let { language, isShowProfileDescription } = this.props
+        let { language, isShowProfileDescription, doctorId } = this.props
         return (
             <div className='doctor-profile-container'>
                 <div className='infor'>
@@ -110,27 +111,36 @@ class BookingModal extends Component {
                     </div>
 
                 </div>
-                <div className='price'>
-                    <FormattedMessage id="admin.manage-doctor.examination-price" />
-                    {language === LANGUAGES.VI &&
-                        <NumberFormat
-                            value={profileDoctor.Doctor_Infor?.priceTypeData?.valueVi}
-                            //className="foo"
-                            displayType={'text'}
-                            thousandSeparator={true}
-                            suffix={'VND'}
-                        />
-                    }
-                    {language === LANGUAGES.EN &&
-                        <NumberFormat
-                            value={profileDoctor.Doctor_Infor?.priceTypeData?.valueEn}
-                            //className="foo"
-                            displayType={'text'}
-                            thousandSeparator={true}
-                            suffix={'$'}
-                        />
-                    }
-                </div>
+                {!isShowProfileDescription ?
+                    <div className='price'>
+                        <FormattedMessage id="admin.manage-doctor.examination-price" />
+                        {language === LANGUAGES.VI &&
+                            <NumberFormat
+                                value={profileDoctor.Doctor_Infor?.priceTypeData?.valueVi}
+                                //className="foo"
+                                displayType={'text'}
+                                thousandSeparator={true}
+                                suffix={'VND'}
+                            />
+                        }
+                        {language === LANGUAGES.EN &&
+                            <NumberFormat
+                                value={profileDoctor.Doctor_Infor?.priceTypeData?.valueEn}
+                                //className="foo"
+                                displayType={'text'}
+                                thousandSeparator={true}
+                                suffix={'$'}
+                            />
+                        }
+                    </div>
+                    :
+                    <div className='pt-1 ps-3'>
+                        <Link to={`/detail-doctor/${doctorId}`} >
+                            <FormattedMessage id="doctor.more-detail" />
+                        </Link>
+                    </div>
+                }
+
             </div>
         );
     }

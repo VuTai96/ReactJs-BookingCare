@@ -6,35 +6,31 @@ import { SampleNextArrow, SamplePrevArrow } from './PreNextArrow'
 import './Sections.scss'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { getAllClinic } from '../../../services/userService';
+import { withRouter } from 'react-router';
 
-// function SampleNextArrow(props) {
-//     const { className, style, onClick } = props;
-//     return (
-//         <div
-//             className='nextstyle'
-//             // style={{ ...style, display: "block", background: "red" }}
-//             onClick={onClick}
-//         >
-//             <i class="fas fa-chevron-right"></i>
-//         </div>
-//     );
-// }
 
-// function SamplePrevArrow(props) {
-//     const { className, style, onClick } = props;
-//     return (
-//         <div
-//             className='prestyle'
-//             // style={{
-//             //     ...style, display: "inline-block", background: "green"
-//             // }}
-//             onClick={onClick}
-//         >
-//             <i class="fas fa-chevron-left"></i>
-//         </div>
-//     );
-// }
 class MedicalFacility extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            arrMedical: []
+        }
+    }
+    async componentDidMount() {
+        let response = await getAllClinic()
+        if (response?.errCode === 0) {
+            this.setState({
+                arrMedical: response?.data || []
+            })
+        } else {
+            console.log('getAllClinic', response.errMessage)
+        }
+    }
+    handleOnclickClinic = async (clinic) => {
+        this.props.history.push(`/detail-clinic/${clinic.id}`)
+    }
+
     render() {
 
         let settings = {
@@ -46,6 +42,8 @@ class MedicalFacility extends Component {
             nextArrow: <SampleNextArrow />,
             prevArrow: <SamplePrevArrow />
         };
+        let { arrMedical } = this.state
+        console.log(arrMedical)
         return (
             <div className='homepage-section second'>
                 <div className='section-content'>
@@ -55,30 +53,25 @@ class MedicalFacility extends Component {
                     </div>
                     <div className='section-body'>
                         <Slider {...settings}>
-                            <div className='image-section2'>
-                                <div className='div-image'>                                </div>
-                                <h5>Bệnh viện hữu nghị Việt Đức</h5>
-                            </div>
-                            <div className='image-section2'>
-                                <div className='div-image'>                                </div>
-                                <h5>Bệnh viện hữu nghị Việt Đức</h5>
-                            </div>
-                            <div className='image-section2'>
-                                <div className='div-image'>                                </div>
-                                <h5>Bệnh viện hữu nghị Việt Đức</h5>
-                            </div>
-                            <div className='image-section2'>
-                                <div className='div-image'>                                </div>
-                                <h5>Bệnh viện hữu nghị Việt Đức</h5>
-                            </div>
-                            <div className='image-section2'>
-                                <div className='div-image'>                                </div>
-                                <h5>Bệnh viện hữu nghị Việt Đức</h5>
-                            </div>
-                            <div className='image-section2'>
-                                <div className='div-image'>                                </div>
-                                <h5>Bệnh viện hữu nghị Việt Đức</h5>
-                            </div>
+                            {arrMedical.map((item, index) => {
+                                return (
+                                    <div className='image-section2' key={index}
+                                        onClick={() => this.handleOnclickClinic(item)}
+                                    >
+                                        <div className='div-image'
+                                            style={{
+                                                backgroundImage: `url("${item.image}")`,
+                                                backgroundPosition: 'center',
+                                                backgroundRepeat: 'no-repeat'
+                                            }}
+                                        > </div>
+                                        <h5>Bệnh viện hữu nghị Việt Đức</h5>
+                                    </div>
+                                )
+                            })
+                            }
+
+
                         </Slider>
                     </div>
                 </div>
@@ -101,4 +94,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MedicalFacility);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MedicalFacility));

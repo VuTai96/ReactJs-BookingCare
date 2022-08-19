@@ -106,6 +106,14 @@ class ManageDoctor extends Component {
                 option.push(obj)
             })
         }
+        if (type === "CLINIC") {
+            data.map((item, index) => {
+                let obj = {}
+                obj.value = item.id
+                obj.label = item.name
+                option.push(obj)
+            })
+        }
         return option
     }
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -117,17 +125,20 @@ class ManageDoctor extends Component {
             })
         }
         if (prevProps.allRequiredDoctorInfor !== this.props.allRequiredDoctorInfor) {
-            let { resPrice, resPayment, resProvince, resSpecialty } = this.props.allRequiredDoctorInfor
+            let { resPrice, resPayment, resProvince, resSpecialty, resClinic } = this.props.allRequiredDoctorInfor
             let optionPrice = this.setOptionDoctor(resPrice, 'PRICE')
             let optionPayment = this.setOptionDoctor(resPayment, 'PAMENT')
             let optionProvince = this.setOptionDoctor(resProvince, 'PROVINCE')
             let optionSpecialty = this.setOptionDoctor(resSpecialty, 'SPECIALTY')
+            let optionClinic = this.setOptionDoctor(resClinic, 'CLINIC')
+
 
             this.setState({
                 optionPrice: optionPrice,
                 optionPayment: optionPayment,
                 optionProvince: optionProvince,
                 optionSpecialty: optionSpecialty,
+                optionClinic: optionClinic,
             })
         }
         if (prevProps.language !== this.props.language) {
@@ -170,12 +181,15 @@ class ManageDoctor extends Component {
         let priceId = response.data?.Doctor_Infor?.priceId || '',
             provinceId = response.data?.Doctor_Infor?.provinceId || '',
             paymentId = response.data?.Doctor_Infor?.paymentId || '',
-            specialtyId = response.data?.Doctor_Infor?.specialtyId || ''
+            specialtyId = response.data?.Doctor_Infor?.specialtyId || '',
+            clinicId = response.data?.Doctor_Infor?.clinicId || ''
 
         let selectedPrice = this.state?.optionPrice.find(item => item.value === priceId) || ''
         let selectedProvince = this.state?.optionProvince.find(item => item.value === provinceId) || ''
         let selectedPayment = this.state?.optionPayment.find(item => item.value === paymentId) || ''
         let selectedSpecialty = this.state?.optionSpecialty.find(item => item.value === specialtyId) || ''
+        let selectedClinic = this.state?.optionClinic.find(item => item.value === clinicId) || ''
+
         this.setState({
             selectedDoctor,
             contentMarkdown: response.data?.Markdown?.contentMarkdown || '',
@@ -189,13 +203,8 @@ class ManageDoctor extends Component {
             selectedProvince: selectedProvince || '',
             selectedPayment: selectedPayment || '',
             selectedSpecialty: selectedSpecialty || '',
-
+            selectedClinic: selectedClinic || '',
         })
-        // }
-        // this.setState({
-        //     selectedDoctor
-
-        // })
     }
     handleSaveContentMarkdown = async () => {
         let detailDoctor = {
