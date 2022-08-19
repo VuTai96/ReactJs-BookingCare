@@ -38,7 +38,8 @@
             "manage-handbook": "Quản lý cẩm nang"
         },
         "doctor": {
-            "doctor-schedule": "Quản lý lịch khám bệnh"
+            "doctor-schedule": "Quản lý lịch khám bệnh",
+            "doctor-patient": "Quản lý bệnh nhân khám bệnh"
         }
     },
     "manage-user": {
@@ -67,7 +68,9 @@
         "choose-doctor": "Chọn bác sĩ:",
         "choose-date": "Chọn ngày:",
         "save-schedule": "Lưu thông tin",
-        "more-detail": "Xem thêm"
+        "more-detail": "Xem thêm",
+        "medical-facility": "Cơ sở y tế nổi bật",
+        "handbook": "Cẩm nang"
     },
     "patient": {
         "detail-doctor": "lịch khám",

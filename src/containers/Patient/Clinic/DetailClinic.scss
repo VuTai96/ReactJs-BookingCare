@@ -9,6 +9,8 @@
         margin-bottom   : 20px;
         text-align      : justify;
         box-shadow      : 0px 0px 8px #888888;
+        padding-left    : 20px;
+        padding-right   : 20px;
 
         .detail-specialty-name {
             font-size  : 1.8rem;
@@ -17,10 +19,14 @@
         }
 
         .detail-specialty-address {
+            opacity: 0.7;
+
             i {
                 opacity: 0.7;
             }
         }
+
+        .detail-specialty-content {}
 
         h3 {
             margin-top: 15px;

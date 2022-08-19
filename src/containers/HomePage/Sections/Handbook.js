@@ -50,8 +50,8 @@ class Handbook extends Component {
             <div className='homepage-section second'>
                 <div className='section-content'>
                     <div className='section-header'>
-                        <h2>Cẩm nang</h2>
-                        <button>Xem thêm</button>
+                        <h2><FormattedMessage id="doctor.handbook" /></h2>
+                        <button><FormattedMessage id="doctor.more-detail" /></button>
                     </div>
                     <div className='section-body'>
                         <Slider {...settings}>

@@ -48,8 +48,8 @@ class MedicalFacility extends Component {
             <div className='homepage-section second'>
                 <div className='section-content'>
                     <div className='section-header'>
-                        <h2>Cơ sở y tế nổi bật</h2>
-                        <button>Xem thêm</button>
+                        <h2><FormattedMessage id="doctor.medical-facility" /></h2>
+                        <button><FormattedMessage id="doctor.more-detail" /></button>
                     </div>
                     <div className='section-body'>
                         <Slider {...settings}>
@@ -65,7 +65,7 @@ class MedicalFacility extends Component {
                                                 backgroundRepeat: 'no-repeat'
                                             }}
                                         > </div>
-                                        <h5>Bệnh viện hữu nghị Việt Đức</h5>
+                                        <h5>{item.name}</h5>
                                     </div>
                                 )
                             })

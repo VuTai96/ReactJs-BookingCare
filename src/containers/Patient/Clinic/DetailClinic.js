@@ -86,7 +86,7 @@ class DetailClinic extends Component {
                             <i class="fas fa-map-marker-alt"></i>
                             {' ' + addressClinic}
                         </div>
-                        <div
+                        <div className='detail-specialty-content'
                             dangerouslySetInnerHTML={{ __html: `${descriptionHTML || ''}` }}
                         >
                         </div>
