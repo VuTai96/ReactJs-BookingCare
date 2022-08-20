@@ -139,7 +139,8 @@ class BookingModal extends Component {
         }
     }
     handleClickSave = async () => {
-        let dateToSend = (new Date(this.state.birthday)).getTime()
+        let birthdayToSend = (new Date(this.state.birthday)).getTime()
+        let dateToSend = this.state.timeScheduledetail.date
         let timeString = this.renderScheduleTime(this.state.timeScheduledetail)
         let doctorName = this.renderDoctorName(this.state.timeScheduledetail)
         let data = {
@@ -149,6 +150,7 @@ class BookingModal extends Component {
             address: this.state.address,
             reason: this.state.reason,
             date: dateToSend,
+            birthday: birthdayToSend,
             doctorId: this.state.doctorId,
             selectedGender: this.state.selectedGender?.value,
             timeType: this.state.timeScheduledetail.timeType,

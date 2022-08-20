@@ -25,7 +25,7 @@ const getAllCode = (type) => {
 const getTopDoctorHomeService = (limit) => {
     return axios.get(`/api/top-doctor-home?limit=${limit}`)
 }
-const getAllDoctors = (type) => {
+const getAllDoctors = () => {
     return axios.get(`/api/get-all-doctors`)
 }
 const postDetailDoctor = (detailDoctor) => {
@@ -76,6 +76,9 @@ const getAllClinic = () => {
 const getDetialClinicById = (id) => {
     return axios.get(`/api/get-detail-clinic-by-id?id=${id}`)
 }
+const getListPatientForDoctor = (doctorId, date) => {
+    return axios.get(`/api/get-list-patient-for-doctor?doctorId=${doctorId}&date=${date}`)
+}
 
 export default handleLogin
 export {
@@ -88,6 +91,6 @@ export {
     postVerifyBookAppointment, postCreateSpecialty,
     getAllSpecialty, getDetialSpecialtyById,
     postCreateClinic, getAllClinic,
-    getDetialClinicById
+    getDetialClinicById, getListPatientForDoctor
 
 }
