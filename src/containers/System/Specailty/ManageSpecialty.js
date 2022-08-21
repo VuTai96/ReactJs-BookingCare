@@ -68,7 +68,6 @@ class ManageSpecialty extends Component {
         }
     }
     render() {
-        console.log(this.state)
         return (
             <div className='manage-specialty-container container'>
                 <div className='title'>

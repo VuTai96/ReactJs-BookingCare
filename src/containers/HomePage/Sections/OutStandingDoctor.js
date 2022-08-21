@@ -10,18 +10,31 @@ import * as actions from '../../../store/actions'
 import { LANGUAGES } from '../../../utils';
 import CommonUtils from '../../../utils/CommonUtils'
 import { withRouter } from 'react-router';
+import LoadingScreen from 'react-loading-screen';
+import ReactLoading from 'react-loading';
+
+const Example = ({ type, color }) => (
+    <ReactLoading type={type} color={color} height={40} width={40} />
+);
 
 
 class OutStandingDoctor extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            arrDoctors: []
+            arrDoctors: [],
+            isLoading: false
         }
     }
 
     async componentDidMount() {
+        this.setState({
+            isLoading: true
+        })
         await this.props.fetchTopDoctorRedux()
+        this.setState({
+            isLoading: false
+        })
     }
     componentDidUpdate(preProps, PreState, snapshot) {
         if (preProps.topDoctorRedux !== this.props.topDoctorRedux) {
@@ -34,7 +47,7 @@ class OutStandingDoctor extends Component {
         this.props.history.push(`/detail-doctor/${doctor.id}`)
     }
     render() {
-        let { arrDoctors } = this.state
+        let { arrDoctors, isLoading } = this.state
         let { language } = this.props
         let settings = {
             className: "slider variable-width",
@@ -53,40 +66,48 @@ class OutStandingDoctor extends Component {
                         <h2><FormattedMessage id="homepage.top-doctor" /></h2>
                         <button><FormattedMessage id="homepage.more-infor" /></button>
                     </div>
-                    <div className='section-body'>
-                        <Slider {...settings}>
-                            {arrDoctors.map((item, index) => {
-                                let urlImage = ''
+                    {isLoading === false ?
+                        <div className='section-body'>
+                            <Slider {...settings}>
+                                {arrDoctors.map((item, index) => {
+                                    let urlImage = ''
 
-                                if (item.image) {
-                                    urlImage = CommonUtils.Base64ToImage(item.image)
+                                    if (item.image) {
+                                        urlImage = CommonUtils.Base64ToImage(item.image)
+                                    }
+
+                                    let nameVi = `${item.positionData.valueVi} ${item.lastName} ${item.firstName}`;
+                                    let nameEn = `${item.positionData.valueEn}  ${item.firstName} ${item.lastName}`;
+                                    return (
+                                        <div className='image-section3' key={index}
+                                            onClick={() => this.handleOnclickDoctor(item)}
+                                        >
+                                            {/* style={{ backgroundImage: `url(${urlImage})` }} */}
+
+
+                                            <div className='div-image'
+                                                style={{
+                                                    backgroundImage: `url("${urlImage}")`,
+                                                    backgroundPosition: 'center',
+                                                    backgroundSize: 'cover',
+                                                    backgroundRepeat: 'no-repeat'
+                                                }}></div>
+                                            <h5>{language === LANGUAGES.VI ? nameVi : nameEn}</h5>
+                                            <p>Đa khoa</p>
+
+                                        </div>
+                                    )
+                                })
                                 }
-
-                                let nameVi = `${item.positionData.valueVi} ${item.lastName} ${item.firstName}`;
-                                let nameEn = `${item.positionData.valueEn}  ${item.firstName} ${item.lastName}`;
-                                return (
-                                    <div className='image-section3' key={index}
-                                        onClick={() => this.handleOnclickDoctor(item)}
-                                    >
-                                        {/* style={{ backgroundImage: `url(${urlImage})` }} */}
-
-
-                                        <div className='div-image'
-                                            style={{
-                                                backgroundImage: `url("${urlImage}")`,
-                                                backgroundPosition: 'center',
-                                                backgroundSize: 'cover',
-                                                backgroundRepeat: 'no-repeat'
-                                            }}></div>
-                                        <h5>{language === LANGUAGES.VI ? nameVi : nameEn}</h5>
-                                        <p>Đa khoa</p>
-
-                                    </div>
-                                )
-                            })
-                            }
-                        </Slider>
-                    </div>
+                            </Slider>
+                        </div>
+                        :
+                        <Example
+                            type={'spinningBubbles'}
+                            color={"rgba(0,0,0,0.6"}
+                            className='loading-center'
+                        />
+                    }
                 </div>
             </div>
         );

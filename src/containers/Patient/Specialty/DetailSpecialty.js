@@ -101,7 +101,6 @@ class DetailSpecialty extends Component {
     }
     render() {
         let { optionDoctor, optionProvince, descriptionHTML, selectedProvince, avata } = this.state
-        console.log(avata)
         return (
             <>
                 <HomeHeader />

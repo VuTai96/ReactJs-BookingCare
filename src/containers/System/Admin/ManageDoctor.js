@@ -246,7 +246,7 @@ class ManageDoctor extends Component {
             selectedPrice, selectedPayment, selectedProvince,
             nameClinic, addressClinic, note,
             selectedSpecialty, selectedClinic, optionSpecialty, optionClinic } = this.state;
-        console.log(this.state)
+
         return (
             <div className='container'>
                 <div className='row mb-5'>

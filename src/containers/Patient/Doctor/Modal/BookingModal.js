@@ -13,6 +13,8 @@ import { toast } from 'react-toastify';
 import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
 import _ from 'lodash';
+import LoadingScreen from 'react-loading-screen';
+
 
 class BookingModal extends Component {
     constructor(props) {
@@ -28,6 +30,7 @@ class BookingModal extends Component {
             genders: '',
             doctorId: '',
             selectedGender: '',
+            isLoading: false
         }
     }
 
@@ -139,6 +142,9 @@ class BookingModal extends Component {
         }
     }
     handleClickSave = async () => {
+        this.setState({
+            isLoading: true
+        })
         let birthdayToSend = (new Date(this.state.birthday)).getTime()
         let dateToSend = this.state.timeScheduledetail.date
         let timeString = this.renderScheduleTime(this.state.timeScheduledetail)
@@ -169,6 +175,7 @@ class BookingModal extends Component {
                 reason: '',
                 birthday: '',
                 selectedGender: '',
+                isLoading: false
             })
             this.props.closeModal()
         } else {
@@ -293,7 +300,15 @@ class BookingModal extends Component {
                     </div>
 
                 </Modal>
+                <LoadingScreen
+                    loading={this.state.isLoading}
+                    bgColor='rgba(32, 33, 37, 0.8)'
+                    spinnerColor='#9ee5f8'
+                    textColor='white'
+                    text='Loading'
 
+                >
+                </LoadingScreen>
             </>
         );
     }
